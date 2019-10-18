@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
       thumbnail: DataTypes.STRING,
       IdFacebook: DataTypes.STRING,
       IdGoogle: DataTypes.STRING,
+      IdInstagram: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
     });
   
     return User;

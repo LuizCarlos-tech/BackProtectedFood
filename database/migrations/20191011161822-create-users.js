@@ -11,11 +11,24 @@ module.exports = {
         allowNull: false,
         type: DataTypes.STRING,
       },
+      email: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      password: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
       IdFacebook: {
         allowNull: true,
         type: DataTypes.STRING,
       },
       IdGoogle: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      IdInstagram: {
         allowNull: true,
         type: DataTypes.STRING,
       },
