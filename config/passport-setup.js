@@ -1,9 +1,9 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const keys = require('./keys');
-const { User } = require('../app/models');
+const keys = require('./keys_google');
+const { users } = require('../app/models');
 const FacebookStrategy  = require('passport-facebook').Strategy;
-const config = require('./config')
+const config = require('./keys_fb')
 
 
 passport.serializeUser(function(user, done) {
@@ -24,17 +24,17 @@ passport.use(
     }, (acessToken, refreshToken ,profile , done) => {
         //check if user already exists in our db
         console.log(profile);
-        User.findOne({where:{IdGoogle: profile.id}}).then((currentUser)=>{
+        users.findOne({where:{id_google: profile.id}}).then((currentUser)=>{
             if(currentUser){
                 //already have the user
                 console.log('user is: ', currentUser);
                 done(null, currentUser);
             }else{
                 //if not, create user in our db
-
-                const user = User.create({ name: profile.displayName, 
-                    IdGoogle: profile.id, 
-                    thumbnail: profile._json.picture }).then((newUser)=>{
+              
+                users.create({ name: profile.displayName,  
+                    url_image: profile._json.picture,
+                    id_google: profile.id}).then((newUser)=>{
                       console.log('new user created:'+ newUser);
                       done(null, newUser);
                   });
@@ -59,16 +59,16 @@ passport.use(
         if(config.use_database) {
             // if sets to true
           
-            User.findOne({where:{IdFacebook: profile.id}}).then((currentUser)=>{
+            users.findOne({where:{id_facebook: profile.id}}).then((currentUser)=>{
               if(currentUser){
                   //already have the user
                   console.log('user is: ', currentUser);
                   done(null, currentUser);
               }else{
                   //if not, create user in our db
-                  const user = User.create({ 
+                  users.create({ 
                     name: profile.displayName, 
-                    IdFacebook: profile.id }).then((newUser)=>{
+                    id_facebook: profile.id }).then((newUser)=>{
                         console.log('new user created:'+ newUser);
                     });
               }

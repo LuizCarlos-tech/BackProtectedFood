@@ -1,13 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('User', {
+    const User = sequelize.define('users', {
       name: DataTypes.STRING,
-      thumbnail: DataTypes.STRING,
-      IdFacebook: DataTypes.STRING,
-      IdGoogle: DataTypes.STRING,
-      IdInstagram: DataTypes.STRING,
-      email: DataTypes.STRING,
+      url_image: DataTypes.STRING,
+      admin: DataTypes.BOOLEAN,
       password: DataTypes.STRING,
+      id_google: DataTypes.STRING,
+      id_facebook: DataTypes.STRING,
+      id_instagram: DataTypes.STRING,
     });
-  
-    return User;
+  return User;
   }
