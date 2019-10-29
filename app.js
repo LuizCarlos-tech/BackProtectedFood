@@ -1,6 +1,7 @@
 const express = require("express");
 const authRoutes = require('./routes/auth-routes');
 const profileRoutes = require('./routes/profile-routes');
+const crudRoutes = require('./routes/crud_routes');
 const passportSetup = require('./config/passport-setup');
 const keys = require('./config/keys_google');
 const cookieSession = require('cookie-session');
@@ -8,7 +9,7 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const { User } = require('./app/models');
+const { users } = require('./app/models');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 //set up routes
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/', crudRoutes);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

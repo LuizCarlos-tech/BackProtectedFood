@@ -1,13 +1,13 @@
 module.exports = {
   up: (queryInterface, DataTypes) => {
     return queryInterface.createTable('users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: DataTypes.INTEGER,
           },
-      name: {
+          name: {
             allowNull: true,
             type: DataTypes.STRING,
           },
@@ -23,26 +23,30 @@ module.exports = {
             allowNull: true,
             type: DataTypes.STRING,
           },
-      id_google: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      id_facebook: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      id_instagram:{
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-      },
+          email: {
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
+          id_google: {
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
+          id_facebook: {
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
+          id_instagram:{
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
+          createdAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+          },
+          updatedAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+          },
     });
   },
 
