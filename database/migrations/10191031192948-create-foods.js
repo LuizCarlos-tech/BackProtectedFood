@@ -15,7 +15,7 @@ module.exports = {
             allowNull: true,
             type: DataTypes.INTEGER,
 		        references: {
-          	 model: 'category',
+          	 model: 'categories',
          	   key: 'id'
         	  }
           },
@@ -23,7 +23,7 @@ module.exports = {
             allowNull: true,
             type: DataTypes.INTEGER,
 		      references: {
-          	 model: 'type',
+          	 model: 'types',
          	   key: 'id'
           }
           },

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { users } = require('../app/models');
+const { users } = require('../../app/models');
 
 router.delete('/UsersDelete/:id', async (req, res) => {
     const user = await users.destroy({

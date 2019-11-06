@@ -1,7 +1,8 @@
 const express = require("express");
-const authRoutes = require('./routes/auth-routes');
-const profileRoutes = require('./routes/profile-routes');
-const crudRoutes = require('./routes/crud_routes');
+const authRoutes = require('./routes/routes-auths/auth-routes');
+const profileRoutes = require('./routes/routes-auths/profile-routes');
+const crudRoutes = require('./routes/routes-auths/crud_routes');
+const crud = require('./routes/crud');
 const passportSetup = require('./config/passport-setup');
 const keys = require('./config/keys_google');
 const cookieSession = require('cookie-session');
@@ -17,6 +18,9 @@ app.set('view engine','ejs');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
@@ -32,12 +36,10 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 app.use('/', crudRoutes);
+app.use('/', crud);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 app.use(session({ secret: 'keyboard cat', key: 'sid'}));
 app.use(express.static(__dirname + '/public'));
@@ -74,6 +76,9 @@ app.get('/', (req, res) =>{
   res.render('home',{user: req.user});
 });
   
-app.listen(3001, () => {
-    console.log('APP LISTENING FOR REQUESTS ON PORT 3001')
+
+
+
+app.listen(3000, () => {
+    console.log('APP LISTENING FOR REQUESTS ON PORT 3000')
 });
