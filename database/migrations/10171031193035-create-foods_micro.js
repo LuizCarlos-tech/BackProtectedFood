@@ -1,7 +1,13 @@
 module.exports = {
   up: (queryInterface, DataTypes) => {
     return queryInterface.createTable('foods_micro', {
-          id_micro: {
+    id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+    id_micro: {
             allowNull: true,
             type: DataTypes.INTEGER,
 		        references: {

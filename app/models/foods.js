@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Foods.associate = models => {
-        Foods.hasMany(models.foods_micro,{
+        Foods.hasMany(models.foods_micros,{
           foreignKey :'id_foods',
-          as:'Foods_micro'
+          as:'foods_micro'
       });
     }
   return Foods;

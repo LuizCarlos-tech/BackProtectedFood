@@ -26,5 +26,19 @@ router.post("/type/create", TypeController.create);
 router.put("/type/update/:id", TypeController.update);
 router.delete("/type/delete/:id", TypeController.delete);
 
+/* Controller de FoodsMicro */
+const Foods_microController = require("./../app/controllers/Foods_microController");
+router.get("/foods-micro/all", Foods_microController.index);
+router.get("/foods-micro/show/:id", Foods_microController.show);
+router.post("/foods-micro/create", Foods_microController.create);
+router.delete("/foods-micro/delete/:id", Foods_microController.delete);
+
+/* Controller de Foods */
+const FoodController = require("./../app/controllers/FoodController");
+router.get("/food/all", FoodController.index);
+router.get("/food/show/:id", FoodController.show);
+router.post("/food/create", FoodController.create);
+router.put("/food/update/:id", FoodController.update);
+router.delete("/food/delete/:id", FoodController.delete);
 
 module.exports = router;
