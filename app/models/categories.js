@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey : 'id_category',
           as : 'foods'
       });
-      Category.hasMany(models.microorganism,{
+      Category.hasMany(models.microorganisms,{
         foreignKey : 'id_category',
         as : 'microorganism'
     });

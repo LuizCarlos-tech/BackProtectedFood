@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
-    const Microorganism = sequelize.define('microorganism', {
+    const Microorganism = sequelize.define('microorganisms', {
       name: DataTypes.STRING,
-      id_categories: DataTypes.INTEGER,
+      id_category: DataTypes.INTEGER,
     });
 
     Microorganism.associate = models => {

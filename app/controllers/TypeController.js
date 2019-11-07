@@ -11,7 +11,7 @@ module.exports = {
         //console.log(error);
         return res.send({
           error: "Erro",
-          deion: "Não foi possível listar os tipos"
+          description: "Não foi possível listar os tipos"
         });
       }
     },

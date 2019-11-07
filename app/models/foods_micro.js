@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
       id_foods: DataTypes.INTEGER,
       id_micro: DataTypes.INTEGER,
     });
-    Foods_micro.associate = models => {
-    }
+
   return Foods_micro;
   }
