@@ -1,4 +1,6 @@
 const { foods } = require("../models");
+const { categories } = require("../models");
+const { types } = require("../models");
 
 module.exports = {
    
@@ -23,7 +25,21 @@ module.exports = {
         const food = await foods.findOne({
           where: { id: req.params.id }
         });
-        return res.send({ food});
+
+        const keyCategory = food.id_category;
+        const category = await categories.findOne({
+          where: { id: keyCategory }
+        });
+
+        const keyType = food.id_type;
+        const type = await types.findOne({
+          where: { id: keyType }
+        });
+
+        const foodsT = { food: food.dataValues, category: category.dataValues, type: type.dataValues};
+
+
+        return res.send(foodsT);
       } catch (error) {
         return res.send({
           error: "Erro",

@@ -1,4 +1,6 @@
 const { foods_micros } = require("../models");
+const { foods } = require("../models");
+const { microorganisms } = require("../models");
 
 module.exports = {
     //Listar todas categorias
@@ -22,7 +24,26 @@ module.exports = {
         const food_micro = await foods_micros.findAll({
           where: { id_foods: req.params.id }
         });
-        return res.send({ food_micro });
+
+        const keyFoods = req.params.id;
+        console.log(keyFoods);
+        
+        const food = await foods.findOne({
+          where: { id: keyFoods }
+         });
+        
+        const ids = food_micro.map(id => id.id_micro);
+         console.log(ids);
+     
+        const value = ids.map(async id => await microorganisms.findAll({
+          where: {id}
+        })
+        );
+        console.log(value);
+        
+        // const micro = { food: food.dataValues, microorganism: microorganism.dataValues}
+        
+        return res.send(food_micro);
       } catch (error) {
         return res.send({
           error: "Erro",

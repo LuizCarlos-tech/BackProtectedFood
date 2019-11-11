@@ -1,4 +1,5 @@
 const { microorganisms } = require("../models");
+const { categories } = require("../models");
 
 module.exports = {
     //Listar todas categorias
@@ -7,6 +8,7 @@ module.exports = {
       try {
         const microorganism = await microorganisms.findAll();
         return res.send({ microorganism });
+
       } catch (error) {
         console.log(error);
         return res.send({
@@ -22,7 +24,18 @@ module.exports = {
         const microorganism = await microorganisms.findOne({
           where: { id: req.params.id }
         });
-        return res.send({ microorganism });
+        const keyCategory = microorganism.id_category;
+        console.log(keyCategory);
+
+        const category = await categories.findOne({
+           where: { id: keyCategory }
+        });
+
+        const micro = { microorganism: microorganism.dataValues, category: category.dataValues}
+        console.log(micro);
+        
+        return res.send(micro);
+        
       } catch (error) {
         return res.send({
           error: "Erro",

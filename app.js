@@ -76,9 +76,6 @@ app.get('/', (req, res) =>{
   res.render('home',{user: req.user});
 });
   
-
-
-
 app.listen(3000, () => {
     console.log('APP LISTENING FOR REQUESTS ON PORT 3000')
 });
