@@ -24,10 +24,10 @@ module.exports = {
     async show(req, res) {
       try {
         const microorganism = await microorganisms.findOne(
-          { include: [{model : categories, as: "categories"}]}, 
-        {
+          { include: [{model : categories, as: "categories"}],
           where: { id: req.params.id }
-        });
+        }
+        );
         
 
         return res.send(microorganism);

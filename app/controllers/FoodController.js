@@ -24,9 +24,10 @@ module.exports = {
     //Listar apenas uma comidas
     async show(req, res) {
       try {
-        const food = await foods.findOne(
-          { include: [{model : categories, as: "categories"}, {model : types, as:"types"}]},
-          { where: { id: req.params.id } }
+        const food = await foods.findAll(
+          { include: [{model : categories, as: "categories"}, {model : types, as:"types"}],
+          where: { id_category: req.params.id }
+        }
         );
         return res.send(food);
       } catch (error) {

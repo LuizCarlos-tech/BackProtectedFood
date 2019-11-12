@@ -24,9 +24,8 @@ module.exports = {
     async show(req, res) {
       try {
         const food_micro = await foods_micros.findAll(
-          { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]},  
-        {          
-          where: { id_foods: req.params.id }
+          { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}],
+            where: { id_foods: req.params.id }
         });
 
         return res.send(food_micro);
