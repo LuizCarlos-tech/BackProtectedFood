@@ -7,7 +7,9 @@ module.exports = {
 
     async index(req, res) {
       try {
-        const food_micro = await foods_micros.findAll();
+        const food_micro = await foods_micros.findAll(
+          { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]}
+        );
         return res.send({ food_micro });
       } catch (error) {
         console.log(error);
@@ -21,28 +23,12 @@ module.exports = {
     //Listar apenas uma categoria
     async show(req, res) {
       try {
-        const food_micro = await foods_micros.findAll({
+        const food_micro = await foods_micros.findAll(
+          { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]},  
+        {          
           where: { id_foods: req.params.id }
         });
 
-        const keyFoods = req.params.id;
-        console.log(keyFoods);
-        
-        const food = await foods.findOne({
-          where: { id: keyFoods }
-         });
-        
-        const ids = food_micro.map(id => id.id_micro);
-         console.log(ids);
-     
-        const value = ids.map(async id => await microorganisms.findAll({
-          where: {id}
-        })
-        );
-        console.log(value);
-        
-        // const micro = { food: food.dataValues, microorganism: microorganism.dataValues}
-        
         return res.send(food_micro);
       } catch (error) {
         return res.send({

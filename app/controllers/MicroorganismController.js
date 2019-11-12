@@ -6,7 +6,9 @@ module.exports = {
 
     async index(req, res) {
       try {
-        const microorganism = await microorganisms.findAll();
+        const microorganism = await microorganisms.findAll(
+          { include: [{model : categories, as: "categories"}]}
+        );
         return res.send({ microorganism });
 
       } catch (error) {
@@ -21,20 +23,14 @@ module.exports = {
     //Listar apenas uma categoria
     async show(req, res) {
       try {
-        const microorganism = await microorganisms.findOne({
+        const microorganism = await microorganisms.findOne(
+          { include: [{model : categories, as: "categories"}]}, 
+        {
           where: { id: req.params.id }
         });
-        const keyCategory = microorganism.id_category;
-        console.log(keyCategory);
-
-        const category = await categories.findOne({
-           where: { id: keyCategory }
-        });
-
-        const micro = { microorganism: microorganism.dataValues, category: category.dataValues}
-        console.log(micro);
         
-        return res.send(micro);
+
+        return res.send(microorganism);
         
       } catch (error) {
         return res.send({

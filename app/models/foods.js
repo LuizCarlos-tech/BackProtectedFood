@@ -6,10 +6,18 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Foods.associate = models => {
-        Foods.hasMany(models.foods_micros,{
+    Foods.hasMany(models.foods_micros,{
           foreignKey :'id_foods',
-          as:'foods_micro'
+          as:'foods_micros'
       });
+    Foods.belongsTo(models.categories,{
+        foreignKey :'id_category',
+        as:'categories'
+      });
+    Foods.belongsTo(models.types,{
+        foreignKey :'id_type',
+        as:'types'
+    });
     }
   return Foods;
 }

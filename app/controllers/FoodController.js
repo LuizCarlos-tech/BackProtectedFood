@@ -7,7 +7,9 @@ module.exports = {
     //Listar todas comidas
     async index(req, res) {
       try {
-        const food = await foods.findAll(
+        const food = await foods.findAll({
+          include: [{model : categories, as: "categories"}, {model : types, as:"types"}]
+        }
        );
         return res.send({ food });
       } catch (error) {
@@ -22,24 +24,11 @@ module.exports = {
     //Listar apenas uma comidas
     async show(req, res) {
       try {
-        const food = await foods.findOne({
-          where: { id: req.params.id }
-        });
-
-        const keyCategory = food.id_category;
-        const category = await categories.findOne({
-          where: { id: keyCategory }
-        });
-
-        const keyType = food.id_type;
-        const type = await types.findOne({
-          where: { id: keyType }
-        });
-
-        const foodsT = { food: food.dataValues, category: category.dataValues, type: type.dataValues};
-
-
-        return res.send(foodsT);
+        const food = await foods.findOne(
+          { include: [{model : categories, as: "categories"}, {model : types, as:"types"}]},
+          { where: { id: req.params.id } }
+        );
+        return res.send(food);
       } catch (error) {
         return res.send({
           error: "Erro",
