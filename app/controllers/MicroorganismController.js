@@ -29,7 +29,6 @@ module.exports = {
         }
         );
         
-
         return res.send(microorganism);
         
       } catch (error) {

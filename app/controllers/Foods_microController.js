@@ -10,7 +10,10 @@ module.exports = {
         const food_micro = await foods_micros.findAll(
           { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]}
         );
-        return res.send({ food_micro });
+        
+        console.log(food_micro);
+          
+        return res.send( food_micro );
       } catch (error) {
         console.log(error);
         return res.send({
@@ -24,11 +27,14 @@ module.exports = {
     async show(req, res) {
       try {
         const food_micro = await foods_micros.findAll(
-          { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}],
+        { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}],
             where: { id_foods: req.params.id }
         });
 
+        console.log(food_micro);
+        
         return res.send(food_micro);
+      
       } catch (error) {
         return res.send({
           error: "Erro",

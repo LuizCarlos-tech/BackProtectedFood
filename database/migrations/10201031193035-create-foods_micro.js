@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('foods_micro', {
+    return queryInterface.createTable('foods_micros', {
     id: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -35,6 +35,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('foods_micro');
+    return queryInterface.dropTable('foods_micros');
   }
 };
