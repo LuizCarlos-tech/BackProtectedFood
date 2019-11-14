@@ -6,10 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Foods.associate = models => {
-    Foods.hasMany(models.foods_micros,{
-          foreignKey :'id_foods',
-          as:'foods_micros'
-      });
+    Foods.belongsToMany(models.microorganisms,{
+      through: 'Foods_micro',
+      as: 'food_micros',
+      foreignKey: 'id_foods',
+    });
     Foods.belongsTo(models.categories,{
         foreignKey :'id_category',
         as:'categories'

@@ -33,15 +33,16 @@ module.exports = {
 
     //Cadastrar tipo
     async create(req, res) {
-        const { type } = req.body;
-    
-        if (!type)
+        const { type, control_measure } = req.body;
+      console.log(control_measure);
+      
+        if (!type || !control_measure)
           return res.send({
             error: "Erro ao Cadastrar",
             deion: "Falha no cadastro."
           });
   
-        const newType = { type };
+        const newType = { type , control_measure };
           
         try {
           //console.log(types, type)
@@ -70,14 +71,14 @@ module.exports = {
           });
     
         try {
-          const ty = await types.update(
+          const type = await types.update(
             {
               type,
               updatedAt: Date.now
             },
             { where: { id: req.params.id } }
           );
-          return res.send({ ty });
+          return res.send({ type });
         } catch (err) {
           return res.send({
             error: "Erro ao Atualizar",

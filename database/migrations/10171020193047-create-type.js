@@ -10,7 +10,11 @@ module.exports = {
           type: {
             allowNull: true,
             type: DataTypes.STRING,
-         },
+          },
+          control_measure: {
+            allowNull: true,
+            type: DataTypes.TEXT,
+          },
           createdAt: {
             allowNull: false,
             type: DataTypes.DATE,

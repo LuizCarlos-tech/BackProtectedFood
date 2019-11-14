@@ -1,12 +1,14 @@
 const { foods_micros } = require("../models");
 const { foods } = require("../models");
 const { microorganisms } = require("../models");
+const { types } = require("../models");
 
 module.exports = {
     //Listar todas categorias
 
     async index(req, res) {
       try {
+
         const food_micro = await foods_micros.findAll(
           { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]}
         );
@@ -27,13 +29,20 @@ module.exports = {
     async show(req, res) {
       try {
         const food_micro = await foods_micros.findAll(
-        { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}],
+        { include: [{model : microorganisms, as: "Microorganism"}],
             where: { id_foods: req.params.id }
         });
 
-        console.log(food_micro);
+        const food = await foods.findOne(
+          { include: [{model : types, as: "types"}],
+              where: { id: req.params.id }
+          });
         
-        return res.send(food_micro);
+          let ret = { food, microorganisms: [] };
+          ///food.map( fn => ret.food.push(fn.name));
+          food_micro.map( fm => ret.microorganisms.push(fm));
+          
+        return res.send(ret);
       
       } catch (error) {
         return res.send({

@@ -1,12 +1,12 @@
-const { categories } = require("../models");
+const { diseases } = require("../models");
 
 module.exports = {
     //Listar todas categorias
 
     async index(req, res) {
       try {
-        const category = await categories.findAll();
-        return res.send({ category });
+        const disease = await diseases.findAll();
+        return res.send({ disease });
       } catch (error) {
         console.log(error);
         return res.send({
@@ -19,10 +19,10 @@ module.exports = {
     //Listar apenas uma categoria
     async show(req, res) {
       try {
-        const category = await categories.findOne({
+        const disease = await diseases.findOne({
           where: { id: req.params.id }
         });
-        return res.send({ category });
+        return res.send({ disease });
       } catch (error) {
         return res.send({
           error: "Erro",
@@ -33,20 +33,20 @@ module.exports = {
   
     //Cadastrar categoria
     async create(req, res) {
-      const { name, description } = req.body;
-      console.log(name, description);
+      const { name, id_micro} = req.body;
+      console.log(name, id_micro);
       
-      if (!name || !description)
+      if (!name || !id_micro)
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
   
-      const newCategorie = { name, description };
+      const newDisease = { name, id_micro };
         
       try {
-        const category = await categories.create(newCategorie);
-        return res.json(category);
+        const disease = await diseases.create(newDisease);
+        return res.json(disease);
       } catch (err) {
         console.log(err);
         return res.json({
@@ -59,25 +59,25 @@ module.exports = {
   
     async update(req, res) {
       //Atualização de Categoria
-      const { name, description } = req.body;
-      console.log(name,description);
+      const { name, id_micro } = req.body;
+      console.log(name,id_micro);
       
-      if (!name || !descripition)
+      if (!name || !id_micro)
         return res.send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
         });
   
       try {
-        const category = await categories.update(
+        const disease = await diseases.update(
           {
             name,
-            description,
+            id_micro,
             updatedAt: Date.now
           },
           { where: { id: req.params.id } }
         );
-        return res.send({ category });
+        return res.send({ disease });
       } catch (err) {
         return res.send({
           error: "Erro ao Atualizar",
@@ -90,10 +90,10 @@ module.exports = {
     async delete(req, res) {
       //Deletar categoria
       try {
-        const category = await categories.destroy({
+        const disease = await diseases.destroy({
           where: { id: req.params.id }
         });
-        return res.send({ category });
+        return res.send({ disease });
       } catch (err) {
         return res.send({
           error: "Erro ao Deletar",

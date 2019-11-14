@@ -41,4 +41,20 @@ router.post("/food/create", FoodController.create);
 router.put("/food/update/:id", FoodController.update);
 router.delete("/food/delete/:id", FoodController.delete);
 
+/* Controller de Doenças */
+const DiseaseController = require("./../app/controllers/DisiaseController");
+router.get("/diseases/all", DiseaseController.index);
+router.get("/diseases/show/:id", DiseaseController.show);
+router.post("/diseases/create", DiseaseController.create);
+router.put("/diseases/update/:id", DiseaseController.update);
+router.delete("/diseases/delete/:id", DiseaseController.delete);
+
+/* Controller de Sintomas */
+const SymptomsController = require("./../app/controllers/SymptomsController");
+router.get("/symptoms/all", SymptomsController.index);
+router.get("/symptoms/show/:id", SymptomsController.show);
+router.post("/symptoms/create", SymptomsController.create);
+router.put("/symptoms/update/:id", SymptomsController.update);
+router.delete("/symptoms/delete/:id", SymptomsController.delete);
+
 module.exports = router;
