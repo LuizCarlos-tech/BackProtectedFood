@@ -1,5 +1,4 @@
 const { foods } = require("../models");
-const { categories } = require("../models");
 const { types } = require("../models");
 
 module.exports = {
@@ -8,7 +7,7 @@ module.exports = {
     async index(req, res) {
       try {
         const food = await foods.findAll({
-          include: [{model : categories, as: "categories"}, {model : types, as:"types"}]
+          include: [{model : types, as:"types"}]
         }
        );
         return res.send({ food });
@@ -25,8 +24,8 @@ module.exports = {
     async show(req, res) {
       try {
         const food = await foods.findAll(
-          { include: [{model : categories, as: "categories"}, {model : types, as:"types"}],
-          where: { id_category: req.params.id }
+          { include: [{model : types, as:"types"}],
+          where: { id_type: req.params.id }
         }
         );
         return res.send(food);

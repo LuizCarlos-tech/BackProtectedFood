@@ -1,5 +1,5 @@
 const { microorganisms } = require("../models");
-const { categories } = require("../models");
+const { diseases } = require("../models");
 
 module.exports = {
     //Listar todas categorias
@@ -7,7 +7,7 @@ module.exports = {
     async index(req, res) {
       try {
         const microorganism = await microorganisms.findAll(
-          { include: [{model : categories, as: "categories"}]}
+          { include: [{model : diseases, as: "diseases"}]}
         );
         return res.send({ microorganism });
 
@@ -24,7 +24,7 @@ module.exports = {
     async show(req, res) {
       try {
         const microorganism = await microorganisms.findOne(
-          { include: [{model : categories, as: "categories"}],
+          { include: [{model : diseases, as: "diseases"}],
           where: { id: req.params.id }
         }
         );
@@ -41,17 +41,16 @@ module.exports = {
   
     //Cadastrar categoria
     async create(req, res) {
-      const { name, id_category } = req.body;
+      const { name, description, url_image } = req.body;
       
-      console.log(name, id_category);
       
-      if (!name || !id_category)
+      if (!name || !description || !url_image)
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
   
-      const newMicroorganism = { name, id_category };
+      const newMicroorganism = { name, description, url_image };
         
       try {
         const microorganism = await microorganisms.create(newMicroorganism);
@@ -81,7 +80,8 @@ module.exports = {
         const microorganism = await microorganisms.update(
           {
             name,
-            id_category,
+            description,
+            url_image,
             updatedAt: Date.now
           },
           { where: { id: req.params.id } }

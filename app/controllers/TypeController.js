@@ -34,7 +34,6 @@ module.exports = {
     //Cadastrar tipo
     async create(req, res) {
         const { type, control_measure } = req.body;
-      console.log(control_measure);
       
         if (!type || !control_measure)
           return res.send({

@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, DataTypes) => {
     return queryInterface.createTable('microorganisms', {
-        id: {
+          id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
@@ -12,14 +12,14 @@ module.exports = {
             allowNull: true,
             type: DataTypes.STRING,
           },
-          id_category: {
+          description: {
             allowNull: true,
-            type: DataTypes.INTEGER,
-		      references: {
-          	 model: 'categories',
-         	   key: 'id'
-          }
-        },
+            type: DataTypes.TEXT,
+          },
+          url_image: {
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
           createdAt: {
             allowNull: false,
             type: DataTypes.DATE,
