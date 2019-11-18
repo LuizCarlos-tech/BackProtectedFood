@@ -3,6 +3,7 @@ const { foods } = require("../models");
 const { microorganisms } = require("../models");
 const { types } = require("../models");
 
+
 module.exports = {
     //Listar todas categorias
 
@@ -40,7 +41,7 @@ module.exports = {
         
           let ret = { food, microorganisms: [] };
           ///food.map( fn => ret.food.push(fn.name));
-          food_micro.map( fm => ret.microorganisms.push(fm));
+          food_micro.map( fm => ret.microorganisms.push(fm.Microorganism.id, fm.Microorganism.name));
           
         return res.send(ret);
       

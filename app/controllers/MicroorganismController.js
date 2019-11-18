@@ -1,5 +1,6 @@
 const { microorganisms } = require("../models");
 const { diseases } = require("../models");
+const { symptoms } = require("../models");
 
 module.exports = {
     //Listar todas categorias
@@ -7,7 +8,7 @@ module.exports = {
     async index(req, res) {
       try {
         const microorganism = await microorganisms.findAll(
-          { include: [{model : diseases, as: "diseases"}]}
+          { include: [{model : diseases, as: "diseases"}, {model : symptoms, as: "symptoms"}]}
         );
         return res.send({ microorganism });
 
@@ -24,11 +25,11 @@ module.exports = {
     async show(req, res) {
       try {
         const microorganism = await microorganisms.findOne(
-          { include: [{model : diseases, as: "diseases"}],
+          { include: [{model : diseases, as: "diseases"}, {model : symptoms, as: "symptoms"}],
           where: { id: req.params.id }
         }
         );
-        
+
         return res.send(microorganism);
         
       } catch (error) {
@@ -67,10 +68,9 @@ module.exports = {
   
     async update(req, res) {
       //Atualização de Categoria
-      const { name, id_category } = req.body;
-      console.log(name,id_category);
+      const { name, description, url_image } = req.body;
       
-      if (!name || !id_category)
+      if (!name || !description || !url_image)
         return res.send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
