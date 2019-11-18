@@ -1,6 +1,7 @@
 const express = require("express");
-const authRoutes = require('./routes/routes-auths/auth-routes');
+const authRoutes = require('./routes/routes-auths/google-routes');
 const profileRoutes = require('./routes/routes-auths/profile-routes');
+const fbRoutes = require('./routes/routes-auths/fb-routes');
 const crudRoutes = require('./routes/routes-auths/crud_routes');
 const crud = require('./routes/crud');
 const passportSetup = require('./config/passport-setup');
@@ -35,6 +36,7 @@ app.use(passport.session());
 //set up routes
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/', fbRoutes);
 app.use('/', crudRoutes);
 app.use('/', crud);
 
@@ -44,33 +46,6 @@ app.set('view engine', 'ejs');
 app.use(session({ secret: 'keyboard cat', key: 'sid'}));
 app.use(express.static(__dirname + '/public'));
   
-app.get('/profilefb', function(req, res){
-  res.render('profile', { user: req.user });
-});
-  
-  //app.use(express.urlencoded({ extended: false }));
-  
-app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('profile', { user: req.user });
-});
-  
-app.get('/auth/facebook', passport.authenticate('facebook',{scope:'email'}));  
-  
-app.get('/auth/facebook/callback',
-passport.authenticate('facebook', { successRedirect : '/profilefb', failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/profilefb');
-  });
-  
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
-    
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-    res.redirect('/login')
-  };
 
 app.get('/', (req, res) =>{
   res.render('home',{user: req.user});
