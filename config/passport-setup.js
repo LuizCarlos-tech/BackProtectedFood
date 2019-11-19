@@ -22,11 +22,10 @@ passport.use(
     clientSecret: keys.google.clientSecret
     }, (acessToken, refreshToken ,profile , done) => {
         //check if user already exists in our db
-        console.log(profile);
+
         User.findOne({where:{id_google: profile.id}}).then((currentUser)=>{
             if(currentUser){
                 //already have the user
-                console.log('user is: ', currentUser);
                 done(null, currentUser);
             }else{
                 //if not, create user in our db
@@ -34,7 +33,6 @@ passport.use(
                 User.create({ name: profile.displayName,  
                     url_image: profile._json.picture,
                     id_google: profile.id}).then((newUser)=>{
-                      console.log('new user created:'+ newUser);
                       done(null, newUser);
                   });
             }
@@ -52,7 +50,7 @@ passport.use(
       callbackURL: config.callback_url
     },
     function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
+
       process.nextTick(function () {
         //Check whether the User exists or not using profile.id
         if(config.use_database) {
@@ -61,14 +59,12 @@ passport.use(
             User.findOne({where:{id_facebook: profile.id}}).then((currentUser)=>{
               if(currentUser){
                   //already have the user
-                  console.log('user is: ', currentUser);
                   done(null, currentUser);
               }else{
                   //if not, create user in our db
                   User.create({ 
                     name: profile.displayName, 
                     id_facebook: profile.id }).then((newUser)=>{
-                        console.log('new user created:'+ newUser);
                     });
               }
           });

@@ -5,10 +5,11 @@ module.exports = {
     async index(req, res) {
       try {
         const type = await types.findAll();
-        //console.log(type);
+
         return res.send({ type });
+
       } catch (error) {
-        //console.log(error);
+
         return res.send({
           error: "Erro",
           description: "Não foi possível listar os tipos"
@@ -22,11 +23,13 @@ module.exports = {
       const type = await types.findOne({
         where: { id: req.params.id }
       });
+
       return res.send({ type });
     } catch (error) {
+
       return res.send({
         error: "Erro ",
-        deion: "Não foi possivel listar a categoria"
+        description: "Não foi possivel listar o tipo"
       });
     }
   },
@@ -44,7 +47,6 @@ module.exports = {
         const newType = { type };
           
         try {
-          //console.log(types, type)
         
           const ty = await types.create(newType);
           return res.json(ty);
@@ -77,24 +79,28 @@ module.exports = {
             },
             { where: { id: req.params.id } }
           );
+
           return res.send({ type });
         } catch (err) {
+
           return res.send({
             error: "Erro ao Atualizar",
-            deion: "Erro no Servidor",
+            description: "Erro no Servidor",
             err
           });
         }
       },
 
       async delete(req, res) {
-        //Deletar categoria
+        //Deletar type
         try {
           const type = await types.destroy({
             where: { id: req.params.id }
           });
+
           return res.send({ type });
         } catch (err) {
+
           return res.send({
             error: "Erro ao Deletar",
             deion: "Erro no Servidor",

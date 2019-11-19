@@ -1,40 +1,42 @@
 const { diseases } = require("../models");
 
 module.exports = {
-    //Listar todas categorias
+    //Listar todas as doenças
 
     async index(req, res) {
       try {
         const disease = await diseases.findAll();
         return res.send({ disease });
+
       } catch (error) {
-        console.log(error);
+
         return res.send({
           error: "Erro",
-          description: "Não foi possível listar as categorias"
+          description: "Não foi possível listar as doenças"
         });
       }
     },
   
-    //Listar apenas uma categoria
+    //Listar apenas uma doença
     async show(req, res) {
       try {
         const disease = await diseases.findOne({
           where: { id: req.params.id }
         });
+
         return res.send({ disease });
       } catch (error) {
+
         return res.send({
           error: "Erro",
-          description: "Não foi possivel listar a categoria"
+          description: "Não foi possivel listar a doença"
         });
       }
     },
   
-    //Cadastrar categoria
+    //Cadastrar doença
     async create(req, res) {
       const { name, id_micro} = req.body;
-      console.log(name, id_micro);
       
       if (!name || !id_micro)
         return res.send({
@@ -46,9 +48,10 @@ module.exports = {
         
       try {
         const disease = await diseases.create(newDisease);
+
         return res.json(disease);
       } catch (err) {
-        console.log(err);
+
         return res.json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
@@ -58,11 +61,11 @@ module.exports = {
     },
   
     async update(req, res) {
-      //Atualização de Categoria
+      //Atualização de Doença
       const { name, id_micro } = req.body;
-      console.log(name,id_micro);
       
       if (!name || !id_micro)
+
         return res.send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
@@ -77,8 +80,10 @@ module.exports = {
           },
           { where: { id: req.params.id } }
         );
+
         return res.send({ disease });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
@@ -88,13 +93,15 @@ module.exports = {
     },
   
     async delete(req, res) {
-      //Deletar categoria
+      //Deletar doença
       try {
         const disease = await diseases.destroy({
           where: { id: req.params.id }
         });
+
         return res.send({ disease });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",

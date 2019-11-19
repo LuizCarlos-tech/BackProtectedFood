@@ -3,25 +3,25 @@ const { diseases } = require("../models");
 const { symptoms } = require("../models");
 
 module.exports = {
-    //Listar todas categorias
+    //Listar todos microorganisms
 
     async index(req, res) {
       try {
         const microorganism = await microorganisms.findAll(
           { include: [{model : diseases, as: "diseases"}, {model : symptoms, as: "symptoms"}]}
         );
-        return res.send({ microorganism });
 
+        return res.send({ microorganism });
       } catch (error) {
-        console.log(error);
+
         return res.send({
           error: "Erro",
-          description: "Não foi possível listar as categorias"
+          description: "Não foi possível listar os microorganismos"
         });
       }
     },
   
-    //Listar apenas uma categoria
+    //Listar apenas um microorganism
     async show(req, res) {
       try {
         const microorganism = await microorganisms.findOne(
@@ -31,19 +31,18 @@ module.exports = {
         );
 
         return res.send(microorganism);
-        
       } catch (error) {
+
         return res.send({
           error: "Erro",
-          description: "Não foi possivel listar a categoria"
+          description: "Não foi possivel listar o microorganismo"
         });
       }
     },
   
-    //Cadastrar categoria
+    //Cadastrar microorganisms
     async create(req, res) {
       const { name, description, url_image } = req.body;
-      
       
       if (!name || !description || !url_image)
         return res.send({
@@ -55,9 +54,10 @@ module.exports = {
         
       try {
         const microorganism = await microorganisms.create(newMicroorganism);
+
         return res.json(microorganism);
       } catch (err) {
-        console.log(err);
+
         return res.json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
@@ -67,10 +67,11 @@ module.exports = {
     },
   
     async update(req, res) {
-      //Atualização de Categoria
+      //Atualização de microorganisms
       const { name, description, url_image } = req.body;
       
       if (!name || !description || !url_image)
+
         return res.send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
@@ -86,8 +87,10 @@ module.exports = {
           },
           { where: { id: req.params.id } }
         );
+
         return res.send({ microorganism });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
@@ -97,13 +100,15 @@ module.exports = {
     },
   
     async delete(req, res) {
-      //Deletar categoria
+      //Deletar microorganisms
       try {
         const microorganism = await microorganisms.destroy({
           where: { id: req.params.id }
         });
+
         return res.send({ microorganism });
       } catch (err) {
+        
         return res.send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",

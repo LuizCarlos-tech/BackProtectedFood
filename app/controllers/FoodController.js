@@ -10,12 +10,13 @@ module.exports = {
           include: [{model : types, as:"types"}]
         }
        );
+
         return res.send({ food });
       } catch (error) {
-        console.log(error);
+
         return res.send({
           error: "Erro",
-          deion: "Não foi possível listar as comidas"
+          description: "Não foi possível listar as comidas"
         });
       }
     },
@@ -28,11 +29,13 @@ module.exports = {
           where: { id_type: req.params.id }
         }
         );
+
         return res.send(food);
       } catch (error) {
+
         return res.send({
           error: "Erro",
-          deion: "Não foi possivel listar a comida"
+          description: "Não foi possivel listar a comida"
         });
       }
     },
@@ -40,25 +43,26 @@ module.exports = {
     //Cadastrar comidas
     async create(req, res) {
       const { name, id_type, url_image, control_measure} = req.body;
-      //console.log(name, id_type, id_category);
   
       if (!name || !id_type || !url_image || !control_measure)
-      //console.log(error);
-        return res.send({
+        
+      return res.send({
           error: "Erro ao Cadastrar",
-          deion: "Falha no cadastro."
+          description: "Falha no cadastro."
         });
   
       const newFood = { name, id_type, url_image, control_measure};
         
       try {
         const food = await foods.create(newFood);
+
         return res.json(food);
+
       } catch (err) {
-        console.log(err);
+
         return res.json({
           error: "Erro ao Cadastrar",
-          deion: "Erro no Servidor.",
+          description: "Erro no Servidor.",
           err
         });
       }
@@ -86,11 +90,13 @@ module.exports = {
           },
           { where: { id: req.params.id } }
         );
+
         return res.send({ food });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Atualizar",
-          deion: "Erro no Servidor",
+          description: "Erro no Servidor",
           err
         });
       }
@@ -103,8 +109,10 @@ module.exports = {
         const food = await foods.destroy({
           where: { id: req.params.id }
         });
+        
         return res.send({ food });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Deletar",
           deion: "Erro no Servidor",

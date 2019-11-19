@@ -2,33 +2,36 @@ const { symptoms } = require("../models");
 const { microorganisms } = require("../models");
 
 module.exports = {
-    //Listar todas categorias
+    //Listar todos os symptoms
 
     async index(req, res) {
       try {
         const symptom = await symptoms.findAll();
+
         return res.send({ symptom });
       } catch (error) {
-        console.log(error);
+
         return res.send({
           error: "Erro",
-          description: "Não foi possível listar as categorias"
+          description: "Não foi possível listar os sintomas"
         });
       }
     },
   
-    //Listar apenas uma categoria
+    //Listar apenas um symptom
     async show(req, res) {
       try {
         const symptom = await symptoms.findOne(
         { include: [{model : microorganisms, as: "microorganisms"}],
         where: { id: req.params.id }
         });
+
         return res.send({ symptom });
       } catch (error) {
+
         return res.send({
           error: "Erro",
-          description: "Não foi possivel listar a categoria"
+          description: "Não foi possivel listar o sintoma"
         });
       }
     },
@@ -36,9 +39,9 @@ module.exports = {
     //Cadastrar categoria
     async create(req, res) {
       const { description, id_micro} = req.body;
-      console.log(description, id_micro);
       
       if (!description || !id_micro)
+      
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
@@ -48,9 +51,10 @@ module.exports = {
         
       try {
         const symptom = await symptoms.create(newSympton);
+
         return res.json(symptom);
       } catch (err) {
-        console.log(err);
+
         return res.json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
@@ -60,9 +64,8 @@ module.exports = {
     },
   
     async update(req, res) {
-      //Atualização de Categoria
+      //Atualização de symptoms
       const { description, id_micro } = req.body;
-      console.log(description,id_micro);
       
       if (!description || !id_micro)
         return res.send({
@@ -79,8 +82,10 @@ module.exports = {
           },
           { where: { id: req.params.id } }
         );
+
         return res.send({ symptom });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
@@ -90,13 +95,15 @@ module.exports = {
     },
   
     async delete(req, res) {
-      //Deletar categoria
+      //Deletar symptoms
       try {
         const symptom = await symptoms.destroy({
           where: { id: req.params.id }
         });
+
         return res.send({ symptom });
       } catch (err) {
+
         return res.send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",

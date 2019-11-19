@@ -5,7 +5,7 @@ const { types } = require("../models");
 
 
 module.exports = {
-    //Listar todas categorias
+    //Listar todas as relaçoes Foods_Micro
 
     async index(req, res) {
       try {
@@ -13,20 +13,18 @@ module.exports = {
         const food_micro = await foods_micros.findAll(
           { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]}
         );
-        
-        console.log(food_micro);
-          
+                  
         return res.send( food_micro );
       } catch (error) {
-        console.log(error);
+
         return res.send({
           error: "Erro",
-          description: "Não foi possível listar as categorias"
+          description: "Não foi possível listar as foods-micro"
         });
       }
     },
   
-    //Listar apenas uma categoria
+    //Listar apenas uma food-micro
     async show(req, res) {
       try {
         const food_micro = await foods_micros.findAll(
@@ -39,27 +37,28 @@ module.exports = {
               where: { id: req.params.id }
           });
         
-          let ret = { food, microorganisms: [] };
-          ///food.map( fn => ret.food.push(fn.name));
+        let ret = { food, microorganisms: [] };
           food_micro.map( fm => ret.microorganisms.push(fm.Microorganism.id, fm.Microorganism.name));
           
         return res.send(ret);
       
       } catch (error) {
+
         return res.send({
           error: "Erro",
-          description: "Não foi possivel listar a categoria"
+          description: "Não foi possivel listar a food-micro"
         });
       }
     },
   
-    //Cadastrar categoria
+    //Cadastrar food-micro
     async create(req, res) {
       const { id_foods, id_micro } = req.body;
       
       console.log(id_foods, id_micro);
       
       if (!id_micro || !id_foods)
+
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
@@ -69,9 +68,10 @@ module.exports = {
         
       try {
         const food_micro = await foods_micros.create(newFoodsMicro);
+
         return res.json(food_micro);
       } catch (err) {
-        console.log(err);
+
         return res.json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
@@ -82,14 +82,14 @@ module.exports = {
   
     
     async delete(req, res) {
-      //Deletar categoria
+      //Deletar food-micro
       try {
         const food_micro = await foods_micros.destroy({
           where: { id: req.params.id }
         });
+
         return res.send({ food_micro });
       } catch (err) {
-          console.log(err);
           
         return res.send({
           error: "Erro ao Deletar",
