@@ -42,15 +42,15 @@ module.exports = {
   
     //Cadastrar microorganisms
     async create(req, res) {
-      const { name, description, url_image } = req.body;
+      const { name, description, url_image, id_disease } = req.body;
       
-      if (!name || !description || !url_image)
+      if (!name || !description || !url_image || !id_disease)
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
   
-      const newMicroorganism = { name, description, url_image };
+      const newMicroorganism = { name, description, url_image, id_disease };
         
       try {
         const microorganism = await microorganisms.create(newMicroorganism);
@@ -68,9 +68,9 @@ module.exports = {
   
     async update(req, res) {
       //Atualização de microorganisms
-      const { name, description, url_image } = req.body;
+      const { name, description, url_image, id_disease } = req.body;
       
-      if (!name || !description || !url_image)
+      if (!name || !description || !url_image || !id_disease)
 
         return res.send({
           error: "Erro ao Atualizar",
@@ -83,6 +83,7 @@ module.exports = {
             name,
             description,
             url_image,
+            id_disease,
             updatedAt: Date.now
           },
           { where: { id: req.params.id } }
@@ -108,7 +109,7 @@ module.exports = {
 
         return res.send({ microorganism });
       } catch (err) {
-        
+
         return res.send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",

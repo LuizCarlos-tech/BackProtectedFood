@@ -2,18 +2,19 @@ module.exports = (sequelize, DataTypes) => {
     const Microorganism = sequelize.define('microorganisms', {
       name: DataTypes.STRING,
       description: DataTypes.STRING,
-      url_image: DataTypes.STRING
+      url_image: DataTypes.STRING,
+      id_disease: DataTypes.INTEGER
     });
 
     Microorganism.associate = models => {
       
-      Microorganism.hasOne(models.symptoms,{
-        foreignKey :'id',
+      Microorganism.hasMany(models.symptoms,{
+        foreignKey :'id_micro',
         as:'symptoms'
       });
 
-      Microorganism.hasMany(models.diseases,{
-        foreignKey :'id',
+      Microorganism.belongsTo(models.diseases,{
+        foreignKey :'id_disease',
         as: 'diseases'
       });
 

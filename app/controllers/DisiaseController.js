@@ -36,15 +36,15 @@ module.exports = {
   
     //Cadastrar doença
     async create(req, res) {
-      const { name, id_micro} = req.body;
+      const { name} = req.body;
       
-      if (!name || !id_micro)
+      if (!name)
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
   
-      const newDisease = { name, id_micro };
+      const newDisease = { name};
         
       try {
         const disease = await diseases.create(newDisease);
@@ -62,9 +62,9 @@ module.exports = {
   
     async update(req, res) {
       //Atualização de Doença
-      const { name, id_micro } = req.body;
+      const { name } = req.body;
       
-      if (!name || !id_micro)
+      if (!name )
 
         return res.send({
           error: "Erro ao Atualizar",
@@ -75,7 +75,6 @@ module.exports = {
         const disease = await diseases.update(
           {
             name,
-            id_micro,
             updatedAt: Date.now
           },
           { where: { id: req.params.id } }
