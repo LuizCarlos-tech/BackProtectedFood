@@ -39,17 +39,17 @@ module.exports = {
   
     //Cadastrar comidas
     async create(req, res) {
-      const { name, id_type, url_image} = req.body;
+      const { name, id_type, url_image, control_measure} = req.body;
       //console.log(name, id_type, id_category);
   
-      if (!name || !id_type || !url_image)
+      if (!name || !id_type || !url_image || !control_measure)
       //console.log(error);
         return res.send({
           error: "Erro ao Cadastrar",
           deion: "Falha no cadastro."
         });
   
-      const newFood = { name, id_type, url_image};
+      const newFood = { name, id_type, url_image, control_measure};
         
       try {
         const food = await foods.create(newFood);
@@ -67,13 +67,12 @@ module.exports = {
 
     //Atualização de comidas
     async update(req, res) {  
-      const { name, id_type, url_image } = req.body;
-      console.log(name, id_type);
+      const { name, id_type, url_image, control_measure } = req.body;
       
-      if (!name || !id_type || !url_image)
+      if (!name || !id_type || !url_image || !control_measure)
         return res.send({
           error: "Erro ao Atualizar",
-          deion: "Falha na atualização"
+          description: "Falha na atualização"
         });
   
       try {
@@ -82,6 +81,7 @@ module.exports = {
             name,
             id_type,
             url_image,
+            control_measure,
             updatedAt: Date.now
           },
           { where: { id: req.params.id } }

@@ -1,5 +1,6 @@
 const express = require("express");
-const authRoutes = require('./routes/routes-auths/google-routes');
+const googleRoutes = require('./routes/routes-auths/google-routes');
+const authRoutes = require('./routes/index');
 const profileRoutes = require('./routes/routes-auths/profile-routes');
 const fbRoutes = require('./routes/routes-auths/fb-routes');
 const crudRoutes = require('./routes/routes-auths/crud_routes');
@@ -11,16 +12,18 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const { users } = require('./app/models');
+const auth = require("./auth")();
 
 const app = express();
 
-app.set('view engine','ejs');
+app.post('/loginUser', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/loginUser' }));
 
+
+app.set('view engine','ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cookieSession({
@@ -28,14 +31,17 @@ app.use(cookieSession({
     keys: [keys.session.cookieKey]
 }));
 
+app.use(auth.initialize());
+
 //initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 
 //set up routes
-app.use('/auth', authRoutes);
+app.use('/auth', googleRoutes);
 app.use('/profile', profileRoutes);
+app.use('/', authRoutes)
 app.use('/', fbRoutes);
 app.use('/', crudRoutes);
 app.use('/', crud);
@@ -43,9 +49,15 @@ app.use('/', crud);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.use(session({ secret: 'keyboard cat', key: 'sid'}));
-app.use(express.static(__dirname + '/public'));
-  
+app.use(express.static(__dirname + '/image'));
+
+
+app.use(session({
+  secret: 'keyboard cat',
+  key: 'sid',
+  resave: true, 
+  saveUninitialized:true
+}));
 
 app.get('/', (req, res) =>{
   res.render('home',{user: req.user});

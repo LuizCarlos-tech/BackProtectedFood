@@ -15,6 +15,10 @@ module.exports = {
             allowNull: true,
             type: DataTypes.STRING,
           },
+          control_measure: {
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
           id_type: {
             allowNull: true,
             type: DataTypes.INTEGER,

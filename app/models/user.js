@@ -1,13 +1,20 @@
+const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('users', {
+    const User = sequelize.define('User', {
       name: DataTypes.STRING,
-      url_image: DataTypes.STRING,
-      admin: DataTypes.BOOLEAN,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      id_google: DataTypes.STRING,
+      admin: DataTypes.BOOLEAN,
       id_facebook: DataTypes.STRING,
-      id_instagram: DataTypes.STRING,
+      id_google: DataTypes.STRING,
+      url_image: DataTypes.STRING
     });
-  return User;
+    
+    User.addHook('beforeSave', async user => {
+      if(user.password) {
+        user.password = await bcrypt.hash(user.password, 8);
+      }
+    });
+
+    return User;
   }

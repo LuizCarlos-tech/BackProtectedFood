@@ -2,7 +2,8 @@ module.exports = (sequelize, DataTypes) => {
     const Foods = sequelize.define('foods', {
       name: DataTypes.STRING,
       id_type: DataTypes.INTEGER,
-      url_image: DataTypes.STRING
+      url_image: DataTypes.STRING,
+      control_measure: DataTypes.TEXT
     });
 
     Foods.associate = models => {
