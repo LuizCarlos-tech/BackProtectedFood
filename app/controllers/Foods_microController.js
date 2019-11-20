@@ -13,7 +13,7 @@ module.exports = {
         const food_micro = await foods_micros.findAll(
           { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]}
         );
-                  
+        
         return res.send( food_micro );
       } catch (error) {
 
@@ -54,9 +54,8 @@ module.exports = {
     //Cadastrar food-micro
     async create(req, res) {
       const { id_foods, id_micro } = req.body;
-      
-      console.log(id_foods, id_micro);
-      
+      let err;
+
       if (!id_micro || !id_foods)
 
         return res.send({
@@ -67,9 +66,11 @@ module.exports = {
       const newFoodsMicro = { id_foods, id_micro };
         
       try {
-        const food_micro = await foods_micros.create(newFoodsMicro);
 
-        return res.json(food_micro);
+          const food_micro = await foods_micros.create(newFoodsMicro);
+
+          return res.json(food_micro);
+        
       } catch (err) {
 
         return res.json({
