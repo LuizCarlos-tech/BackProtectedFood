@@ -72,9 +72,9 @@ module.exports = {
         const newUserg = { name, email, url_image, id_google };
           
         try {
-            const verifica = await User.findOne({
+        const verifica = await User.findOne({
                 where: { id_google: id_google }
-              });
+        });
 
         if(verifica == null){
           const goo = await User.create(newUserg);

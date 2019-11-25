@@ -47,9 +47,17 @@ module.exports = {
         const newType = { type };
           
         try {
-        
-          const ty = await types.create(newType);
+          
+          const verifica = await types.findOne({
+            where: { type: type }
+          });
+
+          if(verifica == null){
+            const ty = await types.create(newType);
           return res.json(ty);
+        }else{
+            return res.json("Type já existe");
+        }
         } catch (err) {
 
           return res.json({

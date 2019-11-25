@@ -50,9 +50,16 @@ module.exports = {
       const newSympton = { description };
         
       try {
-        const symptom = await symptoms.create(newSympton);
+        const verifica = await symptoms.findOne({
+          where: { description: description }
+        });
 
+        if(verifica == null){
+          const symptom = await symptoms.create(newSympton);
         return res.json(symptom);
+      }else{
+          return res.json("Sintoma já existe");
+      }
       } catch (err) {
 
         return res.json({

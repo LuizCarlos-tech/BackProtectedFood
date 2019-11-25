@@ -16,10 +16,6 @@ module.exports = {
             allowNull: true,
             type: DataTypes.TEXT,
           },
-          url_image: {
-            allowNull: true,
-            type: DataTypes.STRING,
-          },
           id_disease: {
             allowNull: true,
             type: DataTypes.INTEGER,

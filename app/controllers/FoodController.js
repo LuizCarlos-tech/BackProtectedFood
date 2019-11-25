@@ -54,10 +54,16 @@ module.exports = {
       const newFood = { name, id_type, url_image, control_measure};
         
       try {
-        const food = await foods.create(newFood);
-
+        const verifica = await foods.findOne({
+          where: { name: name }
+        });
+  
+        if(verifica == null){
+          const food = await foods.create(newFood);
         return res.json(food);
-
+        }else{
+            return res.json("Comida já existe");
+        }
       } catch (err) {
 
         return res.json({

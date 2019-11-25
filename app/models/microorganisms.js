@@ -2,7 +2,6 @@ module.exports = (sequelize, DataTypes) => {
     const Microorganism = sequelize.define('microorganisms', {
       name: DataTypes.STRING,
       description: DataTypes.STRING,
-      url_image: DataTypes.STRING,
       id_disease: DataTypes.INTEGER
     });
 

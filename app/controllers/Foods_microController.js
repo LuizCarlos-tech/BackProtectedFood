@@ -67,12 +67,20 @@ module.exports = {
         
       try {
 
-          const food_micro = await foods_micros.create(newFoodsMicro);
-
-          return res.json(food_micro);
+        //const verifica = await foods_micros.findOne({
+          //where: {id_foods: id_foods}
+        //});
+        //console.log(verifica);
         
+        //if(verifica == null){
+        const food_micro = await foods_micros.create(newFoodsMicro);
+        return res.json(food_micro);
+        //}else{
+            //return res.json("Food-micro relação já existe");
+       // }
       } catch (err) {
-
+        console.log(err);
+        
         return res.json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",

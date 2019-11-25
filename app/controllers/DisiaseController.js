@@ -44,12 +44,19 @@ module.exports = {
           description: "Falha no cadastro."
         });
   
-      const newDisease = { name};
+      const newDisease = { name };
         
       try {
-        const disease = await diseases.create(newDisease);
-
+        const verifica = await diseases.findOne({
+          where: { name: name }
+        });
+  
+        if(verifica == null){
+          const disease = await diseases.create(newDisease);
         return res.json(disease);
+        }else{
+            return res.json("Doença já existe");
+        }
       } catch (err) {
 
         return res.json({

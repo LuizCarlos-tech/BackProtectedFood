@@ -42,20 +42,27 @@ module.exports = {
   
     //Cadastrar microorganisms
     async create(req, res) {
-      const { name, description, url_image, id_disease } = req.body;
+      const { name, description, id_disease } = req.body;
       
-      if (!name || !description || !url_image || !id_disease)
+      if (!name || !description || !id_disease)
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
   
-      const newMicroorganism = { name, description, url_image, id_disease };
+      const newMicroorganism = { name, description, id_disease };
         
       try {
-        const microorganism = await microorganisms.create(newMicroorganism);
+      const verifica = await microorganisms.findOne({
+        where: { name: name }
+      });
 
-        return res.json(microorganism);
+      if(verifica == null){
+        const microorganism = await microorganisms.create(newMicroorganism);
+      return res.json(microorganism);
+      }else{
+          return res.json("Microorganismo já existe");
+      }
       } catch (err) {
 
         return res.json({
@@ -68,9 +75,9 @@ module.exports = {
   
     async update(req, res) {
       //Atualização de microorganisms
-      const { name, description, url_image, id_disease } = req.body;
+      const { name, description, id_disease } = req.body;
       
-      if (!name || !description || !url_image || !id_disease)
+      if (!name || !description || !id_disease)
 
         return res.send({
           error: "Erro ao Atualizar",
@@ -82,7 +89,6 @@ module.exports = {
           {
             name,
             description,
-            url_image,
             id_disease,
             updatedAt: Date.now
           },
