@@ -14,8 +14,7 @@ module.exports = {
         
         return res.send( diseases_symptom );
       } catch (error) {
-        console.log(error);
-        
+
         return res.send({
           error: "Erro",
           description: "Não foi possível listar as foods-micro"
@@ -34,7 +33,6 @@ module.exports = {
         return res.send(diseases_symptom);
       
       } catch (error) {
-        console.log(error);
         
         return res.send({
           error: "Erro",
