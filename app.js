@@ -1,9 +1,5 @@
 const express = require("express");
-const googleRoutes = require('./routes/routes-auths/google-routes');
 const authRoutes = require('./routes/index');
-const profileRoutes = require('./routes/routes-auths/profile-routes');
-const fbRoutes = require('./routes/routes-auths/fb-routes');
-const crudRoutes = require('./routes/routes-auths/crud_routes');
 const crud = require('./routes/crud');
 const passportSetup = require('./config/passport-setup');
 const keys = require('./config/keys_google');
@@ -39,11 +35,8 @@ app.use(passport.session());
 
 
 //set up routes
-app.use('/auth', googleRoutes);
-app.use('/profile', profileRoutes);
+
 app.use('/', authRoutes)
-app.use('/', fbRoutes);
-app.use('/', crudRoutes);
 app.use('/', crud);
 
 app.set('views', __dirname + '/views');

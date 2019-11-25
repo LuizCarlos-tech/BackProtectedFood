@@ -56,4 +56,11 @@ router.post("/symptoms/create", SymptomsController.create);
 router.put("/symptoms/update/:id", SymptomsController.update);
 router.delete("/symptoms/delete/:id", SymptomsController.delete);
 
+/* Controller de Users */
+const UserController = require("./../app/controllers/UserController");
+router.post("/auth/google/create", UserController.createG);
+router.post("/auth/facebook/create", UserController.createF);
+router.delete("/auth/facebook/delete", UserController.deleteF);
+router.delete("/auth/google/delete", UserController.deleteG);
+
 module.exports = router;
