@@ -5,6 +5,12 @@ module.exports = (sequelize, DataTypes) => {
 
     Diseases.associate = models => {
 
+      Diseases.belongsToMany(models.symptoms,{
+        through: 'Diseases_symptoms',
+        as: 'diseases_symptoms',
+        foreignKey: 'id_disease',
+      });
+
       Diseases.hasMany(models.microorganisms,{
         foreignKey :'id',
         as:'microorganisms'

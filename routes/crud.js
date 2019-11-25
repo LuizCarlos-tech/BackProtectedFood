@@ -25,6 +25,13 @@ router.get("/foods-micro/show/:id", Foods_microController.show);
 router.post("/foods-micro/create", Foods_microController.create);
 router.delete("/foods-micro/delete/:id", Foods_microController.delete);
 
+/* Controller de DiseasesSymptoms */
+const Diseases_symptomsController = require("./../app/controllers/Diseases_symptomsController");
+router.get("/diseases-symptoms/all", Diseases_symptomsController.index);
+router.get("/diseases-symptoms/show/:id", Diseases_symptomsController.show);
+router.post("/diseases-symptoms/create", Diseases_symptomsController.create);
+router.delete("/diseases-symptoms/delete/:id", Diseases_symptomsController.delete);
+
 /* Controller de Foods */
 const FoodController = require("./../app/controllers/FoodController");
 router.get("/food/all", FoodController.index);

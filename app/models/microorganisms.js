@@ -7,11 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Microorganism.associate = models => {
-      
-      Microorganism.hasMany(models.symptoms,{
-        foreignKey :'id_micro',
-        as:'symptoms'
-      });
 
       Microorganism.belongsTo(models.diseases,{
         foreignKey :'id_disease',

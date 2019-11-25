@@ -36,7 +36,7 @@ module.exports = {
   
     //Cadastrar doença
     async create(req, res) {
-      const { name} = req.body;
+      const { name } = req.body;
       
       if (!name)
         return res.send({

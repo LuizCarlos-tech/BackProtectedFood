@@ -38,16 +38,16 @@ module.exports = {
   
     //Cadastrar categoria
     async create(req, res) {
-      const { description, id_micro} = req.body;
+      const { description} = req.body;
       
-      if (!description || !id_micro)
+      if (!description)
       
         return res.send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
   
-      const newSympton = { description, id_micro };
+      const newSympton = { description };
         
       try {
         const symptom = await symptoms.create(newSympton);
@@ -65,9 +65,9 @@ module.exports = {
   
     async update(req, res) {
       //Atualização de symptoms
-      const { description, id_micro } = req.body;
+      const { description } = req.body;
       
-      if (!description || !id_micro)
+      if (!description)
         return res.send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
@@ -77,7 +77,6 @@ module.exports = {
         const symptom = await symptoms.update(
           {
             description,
-            id_micro,
             updatedAt: Date.now
           },
           { where: { id: req.params.id } }

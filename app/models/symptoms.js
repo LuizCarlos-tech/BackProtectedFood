@@ -1,16 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
     const Symptoms = sequelize.define('symptoms', {
       description: DataTypes.STRING,
-      id_micro: DataTypes.INTEGER,
     });
 
     Symptoms.associate = models => {
 
-      Symptoms.belongsTo(models.microorganisms,{
-        foreignKey :'id',
-        as:'microorganisms'
+      Symptoms.belongsToMany(models.diseases,{
+        through: 'Diseases_symptoms',
+        as: 'diseases_symptoms',
+        foreignKey: 'id_symptom',
       });
-
     }
   return Symptoms;
 }
