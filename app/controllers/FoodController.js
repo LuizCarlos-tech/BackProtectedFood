@@ -22,11 +22,11 @@ module.exports = {
     },
   
     //Listar apenas uma comidas
-    async show(req, res) {
+    async showId(req, res) {
       try {
         const food = await foods.findAll(
           { include: [{model : types, as:"types"}],
-          where: { id_type: req.params.id }
+          where: { id: req.params.id }
         }
         );
 
@@ -35,10 +35,47 @@ module.exports = {
 
         return res.send({
           error: "Erro",
-          description: "Não foi possivel listar a comida"
+          deion: "Não foi possivel listar a comida"
         });
       }
     },
+    //Listar apenas uma comida pelo name
+    async showName(req, res) {
+      try {
+        const food = await foods.findAll(
+          { include: [{model : types, as:"types"}],
+          where: { name: req.params.name }
+        }
+        );
+
+        return res.send(food);
+      } catch (error) {
+
+        return res.send({
+          error: "Erro",
+          deion: "Não foi possivel listar a comida"
+        });
+      }
+    },
+
+       //Listar apenas uma comida pelo type
+       async showType(req, res) {
+        try {
+          const food = await foods.findAll(
+            { include: [{model : types, as:"types"}],
+            where: { id_type: req.params.id_type }
+          }
+          );
+  
+          return res.send(food);
+        } catch (error) {
+  
+          return res.send({
+            error: "Erro",
+            deion: "Não foi possivel listar a comida"
+          });
+        }
+      }, 
   
     //Cadastrar comidas
     async create(req, res) {

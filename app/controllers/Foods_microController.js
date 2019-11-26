@@ -67,17 +67,17 @@ module.exports = {
         
       try {
 
-        //const verifica = await foods_micros.findOne({
-          //where: {id_foods: id_foods}
-        //});
-        //console.log(verifica);
+        // const verifica = await foods_micros.findAll({
+        //   where: {id_micro: id_micro, id_foods: id_foods}
+        // });
+        // console.log(verifica);
         
-        //if(verifica == null){
+        // if(verifica == null){
         const food_micro = await foods_micros.create(newFoodsMicro);
         return res.json(food_micro);
-        //}else{
-            //return res.json("Food-micro relação já existe");
-       // }
+        // }else{
+        //     return res.json("Food-micro relação já existe");
+        // }
       } catch (err) {
         console.log(err);
         

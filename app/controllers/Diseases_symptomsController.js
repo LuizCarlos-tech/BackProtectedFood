@@ -43,31 +43,20 @@ module.exports = {
   
     //Cadastrar food-micro
     async create(req, res) {
-      const { id_disease, id_symptom } = req.body;
+      const { idDisease, idsSymptoms } =  req;
+      console.log(idDisease, idsSymptoms);
+      
+      idsSymptoms.map(async id => {
+        const x = await diseases_symptoms.create({ 
+          id_disease: idDisease,
+          id_symptom: id
+        })
+        .then(() => console.log('ok'))
+        .catch(err => res.send(err));
+      });
 
-      if (!id_disease || !id_symptom)
+      res.status(200).send({ "status": "ok" });
 
-        return res.send({
-          error: "Erro ao Cadastrar",
-          description: "Falha no cadastro."
-        });
-        
-      const newDiseaseSymptom = { id_disease, id_symptom };
-        
-      try {
-
-          const diseases_symptom = await diseases_symptoms.create(newDiseaseSymptom);
-
-          return res.json(diseases_symptom);
-        
-      } catch (err) {
-
-        return res.json({
-          error: "Erro ao Cadastrar",
-          description: "Erro no Servidor.",
-          err
-        });
-      }
     },
   
     

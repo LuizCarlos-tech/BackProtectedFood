@@ -134,32 +134,52 @@ module.exports = {
     },
     // Create a new user
     async create(req, res) {
-        const { name, email, password, admin, url_image } = req.body;
-        const newUser = { name, email, password, admin, url_image };
-        const user = await User.findOne({where : { email }});
-        
-        if( user === null ){
-            try {
-                const user = await User.create(newUser);
-                
-                user.password = undefined;
-                res.status(200).json(user);
-            } catch (err) {
-                return res.status(422).json({ error: 'error registering new user' });
-            }
-        } else {
-            if(email !== user.email) {
-                try {
-                    const user = await User.create(newUser);
-                    user.password = undefined;
-                    res.status(200).json(user);
-                } catch (err) {
-                    return res.status(422).json({ error: 'error registering new user' });
-                }
-            } else {
-                res.status(422).json('Erro ao registrar usuário, email já cadastrado');
-            }
-        }
+      const { name, email, password, url_image } = req.body;
+      const newUser = { ...req.body };
+      const user = await User.findOne({where : { email }});
+
+      function IsValidJSONString(str) {
+          try {
+              JSON.parse(str);
+          } catch (e) {
+              return false;u
+          }
+          return true;
+      }
+    
+      const newUserText = JSON.stringify(newUser);
+      
+      if( IsValidJSONString(newUserText) ) {
+          if ( email !== "" && name !== "" && password !== "" ) {
+              if( user === null ){
+                  try {
+                      const user = await User.create(newUser);
+                      
+                      user.password = undefined;
+                      res.status(200).json(user);
+                  } catch (err) {
+                      return res.status(422).json({ error: 'error registering new user' });
+                  }
+              } else {
+                  if(email !== user.email) {
+                      try {
+                          const user = await User.create(newUser);
+                          
+                          user.password = undefined;
+                          res.status(200).json(user);
+                      } catch (err) {
+                          return res.status(422).json({ error: 'error registering new user' });
+                      }
+                  } else {
+                      res.status(422).json('Erro ao registrar usuário, email já cadastrado');
+                  }
+              }
+          } else {
+              return res.status(422).json({ error : 'JSON contains empty information' })
+          }
+      } else {
+          return res.status(400).json({ error: 'Invalid JSON' })
+      }
     },
     // Update user data
     async update(req, res) {

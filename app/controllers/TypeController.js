@@ -18,7 +18,7 @@ module.exports = {
     },
 
     //Listar apenas um tipo
-  async show(req, res) {
+  async showId(req, res) {
     try {
       const type = await types.findOne({
         where: { id: req.params.id }
@@ -33,7 +33,21 @@ module.exports = {
       });
     }
   },
+  async showType(req, res) {
+    try {
+      const type = await types.findOne({
+        where: { type: req.params.type }
+      });
 
+      return res.send({ type });
+    } catch (error) {
+
+      return res.send({
+        error: "Erro ",
+        deion: "Não foi possivel listar o tipo"
+      });
+    }
+  },
     //Cadastrar tipo
     async create(req, res) {
         const { type } = req.body;

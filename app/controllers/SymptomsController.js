@@ -37,37 +37,29 @@ module.exports = {
     },
   
     //Cadastrar categoria
-    async create(req, res) {
-      const { description} = req.body;
-      
-      if (!description)
-      
-        return res.send({
-          error: "Erro ao Cadastrar",
-          description: "Falha no cadastro."
-        });
-  
-      const newSympton = { description };
-        
-      try {
-        const verifica = await symptoms.findOne({
-          where: { description: description }
-        });
+    async create(req, res, next) {
+      const sympList = req.body.symptoms;
+      let idsSymptoms = [];
 
-        if(verifica == null){
-          const symptom = await symptoms.create(newSympton);
-        return res.json(symptom);
-      }else{
-          return res.json("Sintoma já existe");
-      }
-      } catch (err) {
+      sympList.map( async symptom => {
+         const x = await symptoms.findOrCreate({
+           where: {
+             description: symptom
+           }, defaults: { description: symptom }
+         })
+         .then(([val, created]) => {
+            idsSymptoms.push(val.id);
+            req.idsSymptoms = idsSymptoms;
+            console.log(req.idsSymptoms);
+            
+         })
+         .catch(err => {
+           res.send(err);
+         });
 
-        return res.json({
-          error: "Erro ao Cadastrar",
-          description: "Erro no Servidor.",
-          err
-        });
-      }
+      });
+      next();
+
     },
   
     async update(req, res) {

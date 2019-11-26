@@ -35,7 +35,7 @@ module.exports = {
     },
   
     //Cadastrar doença
-    async create(req, res) {
+    async create(req, res, next) {
       const { name } = req.body;
       
       if (!name)
@@ -53,7 +53,9 @@ module.exports = {
   
         if(verifica == null){
           const disease = await diseases.create(newDisease);
-        return res.json(disease);
+          //return res.json(disease);
+          req.idDisease = disease.id;
+          next();
         }else{
             return res.json("Doença já existe");
         }
@@ -62,7 +64,7 @@ module.exports = {
         return res.json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
-          err
+          erro: err.message
         });
       }
     },

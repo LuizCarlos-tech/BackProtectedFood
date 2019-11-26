@@ -1,6 +1,8 @@
 /* Rota de Teste */
 const express = require("express");
 const router = express.Router();
+const SymptomsController = require("./../app/controllers/SymptomsController");
+
 
 /* Controller de Microorganism */
 const MicroorganismController = require("./../app/controllers/MicroorganismController");
@@ -13,7 +15,8 @@ router.delete("/microorganism/delete/:id", MicroorganismController.delete);
 /* Controller de Types */
 const TypeController = require("./../app/controllers/TypeController");
 router.get("/type/all", TypeController.index);
-router.get("/type/show/:id", TypeController.show);
+router.get("/type/showId/:id", TypeController.showId);
+router.get("/type/showType/:type", TypeController.showType);
 router.post("/type/create", TypeController.create);
 router.put("/type/update/:id", TypeController.update);
 router.delete("/type/delete/:id", TypeController.delete);
@@ -35,21 +38,26 @@ router.delete("/diseases-symptoms/delete/:id", Diseases_symptomsController.delet
 /* Controller de Foods */
 const FoodController = require("./../app/controllers/FoodController");
 router.get("/food/all", FoodController.index);
-router.get("/food/show/:id", FoodController.show);
+router.get("/food/showId/:id", FoodController.showId);
+router.get("/food/showName/:name", FoodController.showName);
+router.get("/food/showType/:id_type", FoodController.showType);
 router.post("/food/create", FoodController.create);
 router.put("/food/update/:id", FoodController.update);
 router.delete("/food/delete/:id", FoodController.delete);
 
 /* Controller de Doenças */
-const DiseaseController = require("./../app/controllers/DisiaseController");
+const DiseaseController = require("../app/controllers/DiseaseController");
 router.get("/diseases/all", DiseaseController.index);
 router.get("/diseases/show/:id", DiseaseController.show);
-router.post("/diseases/create", DiseaseController.create);
+router.post("/diseases/create", 
+    DiseaseController.create, 
+    SymptomsController.create,
+    Diseases_symptomsController.create
+);
 router.put("/diseases/update/:id", DiseaseController.update);
 router.delete("/diseases/delete/:id", DiseaseController.delete);
 
 /* Controller de Sintomas */
-const SymptomsController = require("./../app/controllers/SymptomsController");
 router.get("/symptoms/all", SymptomsController.index);
 router.get("/symptoms/show/:id", SymptomsController.show);
 router.post("/symptoms/create", SymptomsController.create);
