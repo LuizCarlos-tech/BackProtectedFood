@@ -41,7 +41,16 @@ router.get("/food/all", FoodController.index);
 router.get("/food/showId/:id", FoodController.showId);
 router.get("/food/showName/:name", FoodController.showName);
 router.get("/food/showType/:id_type", FoodController.showType);
-router.post("/food/create", FoodController.create);
+
+router.post("/food/create", async (req, res) => {
+    await FoodController.create(req.body, res)
+    .then(async id => {
+        await Foods_microController.create(id, req.body.microorganisms, res)
+    })
+}
+ );
+
+
 router.put("/food/update/:id", FoodController.update);
 router.delete("/food/delete/:id", FoodController.delete);
 
@@ -49,10 +58,24 @@ router.delete("/food/delete/:id", FoodController.delete);
 const DiseaseController = require("../app/controllers/DiseaseController");
 router.get("/diseases/all", DiseaseController.index);
 router.get("/diseases/show/:id", DiseaseController.show);
-router.post("/diseases/create", 
-    DiseaseController.create, 
-    SymptomsController.create,
-    Diseases_symptomsController.create
+router.post("/diseases/create",
+    async (req, res) => {
+        
+        await DiseaseController.create(req.body, res)
+        .then(async id => {
+            await SymptomsController.create(id, req.body.symptoms, res)
+            .then(async ([id, ids]) => {
+                await Diseases_symptomsController.create(id, ids, res)
+                .then(status => res.send({ "status": "ok" }))
+                .catch(err => res.send({ "error": err }))
+            })
+            .catch(err => res.send({ "error": err }))
+        })
+        .catch(err => res.send({"error": err}));
+    }
+    // DiseaseController.create, 
+    // SymptomsController.create,
+    // Diseases_symptomsController.create
 );
 router.put("/diseases/update/:id", DiseaseController.update);
 router.delete("/diseases/delete/:id", DiseaseController.delete);

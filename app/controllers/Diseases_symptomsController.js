@@ -42,11 +42,11 @@ module.exports = {
     },
   
     //Cadastrar food-micro
-    async create(req, res) {
-      const { idDisease, idsSymptoms } =  req;
-      console.log(idDisease, idsSymptoms);
+    async create(idDisease, ids, res) {
+      console.log(idDisease, ids);
       
-      idsSymptoms.map(async id => {
+      
+      ids.map(async id => {
         const x = await diseases_symptoms.create({ 
           id_disease: idDisease,
           id_symptom: id

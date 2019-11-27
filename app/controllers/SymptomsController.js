@@ -37,29 +37,21 @@ module.exports = {
     },
   
     //Cadastrar categoria
-    async create(req, res, next) {
-      const sympList = req.body.symptoms;
-      let idsSymptoms = [];
+    async create(id, symptoms_list, res) {
+      let ids = [];
 
-      sympList.map( async symptom => {
-         const x = await symptoms.findOrCreate({
-           where: {
-             description: symptom
-           }, defaults: { description: symptom }
-         })
-         .then(([val, created]) => {
-            idsSymptoms.push(val.id);
-            req.idsSymptoms = idsSymptoms;
-            console.log(req.idsSymptoms);
-            
-         })
-         .catch(err => {
-           res.send(err);
-         });
+      for(symptom of symptoms_list){
+        let symp = await symptoms.findOrCreate({
+          where: { description: symptom }
+          ,defaults: { description: symptom }
+        })
+        .then(([val, created]) => {
+          ids.push(val.id);
+        })
+        .catch(err => res.send(err));
+      }
 
-      });
-      next();
-
+      return ([id, ids]);
     },
   
     async update(req, res) {

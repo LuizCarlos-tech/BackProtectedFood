@@ -35,8 +35,8 @@ module.exports = {
     },
   
     //Cadastrar doença
-    async create(req, res, next) {
-      const { name } = req.body;
+    async create(disease, res) {
+      const { name } = disease;
       
       if (!name)
         return res.send({
@@ -48,14 +48,12 @@ module.exports = {
         
       try {
         const verifica = await diseases.findOne({
-          where: { name: name }
+          where: { name }
         });
   
         if(verifica == null){
           const disease = await diseases.create(newDisease);
-          //return res.json(disease);
-          req.idDisease = disease.id;
-          next();
+          return disease.id;
         }else{
             return res.json("Doença já existe");
         }

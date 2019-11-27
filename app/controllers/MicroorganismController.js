@@ -8,7 +8,7 @@ module.exports = {
     async index(req, res) {
       try {
         const microorganism = await microorganisms.findAll(
-          { include: [{model : diseases, as: "diseases"}, {model : symptoms, as: "symptoms"}]}
+          { include: [{model : diseases, as: "diseases"}]}
         );
 
         return res.send({ microorganism });
@@ -25,7 +25,7 @@ module.exports = {
     async show(req, res) {
       try {
         const microorganism = await microorganisms.findOne(
-          { include: [{model : diseases, as: "diseases"}, {model : symptoms, as: "symptoms"}],
+          { include: [{model : diseases, as: "diseases"}],
           where: { id: req.params.id }
         }
         );
