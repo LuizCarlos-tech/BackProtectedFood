@@ -52,41 +52,18 @@ module.exports = {
     },
   
     //Cadastrar food-micro
-    async create(req, res) {
-      const { id_foods, id_micro } = req.body;
-      let err;
+    async create(idFood, ids, res) {
 
-      if (!id_micro || !id_foods)
-
-        return res.send({
-          error: "Erro ao Cadastrar",
-          description: "Falha no cadastro."
-        });
-        
-      const newFoodsMicro = { id_foods, id_micro };
-        
-      try {
-
-        // const verifica = await foods_micros.findAll({
-        //   where: {id_micro: id_micro, id_foods: id_foods}
-        // });
-        // console.log(verifica);
-        
-        // if(verifica == null){
-        const food_micro = await foods_micros.create(newFoodsMicro);
-        return res.json(food_micro);
-        // }else{
-        //     return res.json("Food-micro relação já existe");
-        // }
-      } catch (err) {
-        console.log(err);
-        
-        return res.json({
-          error: "Erro ao Cadastrar",
-          description: "Erro no Servidor.",
-          err
-        });
-      }
+      ids.map(async id => {
+        const x = await foods_micros.create({ 
+          id_foods: idFood,
+          id_micro: id
+        })
+        .then(() => console.log('ok'))
+        .catch(err => res.send(err));
+      });
+      
+      res.status(200).send({ "status": "ok" });
     },
   
     

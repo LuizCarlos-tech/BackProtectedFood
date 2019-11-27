@@ -78,8 +78,8 @@ module.exports = {
       }, 
   
     //Cadastrar comidas
-    async create(req, res) {
-      const { name, id_type, url_image, control_measure} = req.body;
+    async create(food, res) {
+      const { name, id_type, url_image, control_measure} = food;
   
       if (!name || !id_type || !url_image || !control_measure)
         
@@ -92,12 +92,12 @@ module.exports = {
         
       try {
         const verifica = await foods.findOne({
-          where: { name: name }
+          where: { name }
         });
   
         if(verifica == null){
           const food = await foods.create(newFood);
-        return res.json(food);
+        return  food.id;
         }else{
             return res.json("Comida já existe");
         }

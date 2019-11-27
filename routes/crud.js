@@ -46,9 +46,11 @@ router.post("/food/create", async (req, res) => {
     await FoodController.create(req.body, res)
     .then(async id => {
         await Foods_microController.create(id, req.body.microorganisms, res)
+        .then(status => res.send({ "status": "ok" }))
+        .catch(err => res.send({ "error": err }))
     })
-}
- );
+    .catch(err => res.send({ "error": err }))
+});
 
 
 router.put("/food/update/:id", FoodController.update);
