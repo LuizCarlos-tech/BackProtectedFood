@@ -94,7 +94,7 @@ module.exports = {
           });
     
         try {
-          const type = await types.update(
+          const newType = await types.update(
             {
               type,
               updatedAt: Date.now
@@ -102,9 +102,9 @@ module.exports = {
             { where: { id: req.params.id } }
           );
 
-          return res.send({ type });
+          return res.send({ newType });
         } catch (err) {
-
+          
           return res.send({
             error: "Erro ao Atualizar",
             description: "Erro no Servidor",

@@ -9,30 +9,26 @@ module.exports = {
     async createF(req, res) {
         const { name, email, url_image, id_facebook } = req.body;
         
-        if (!name || !email || !url_image || !id_facebook)
+        if (!name || !email || !id_facebook)
           return res.send({
             error: "Erro ao Cadastrar",
             deion: "Falha no cadastro."
           });
     
-        const newUserf = { name, email, url_image, id_facebook };
+        //const newUserf = { name, email, url_image, id_facebook };
         
 
         try {
-          const verifica = await User.findOne({
-                where: { id_facebook: id_facebook }
-              });
+          const fb = await User.findOrCreate({
+            where: { id_facebook: id_facebook },
+            defaults: { name , email, id_facebook }
+        });
 
-        if(verifica == null){
-          const face = await User.create(newUserf);
-          return res.json(face);
-
-            }else{
-                return res.json("User já existe");
-            }
+        return res.json(fb);
 
         } catch (err) {
-  
+          console.log(err);
+          
           return res.json({
             error: "Erro ao Cadastrar",
             deion: "Erro no Servidor.",
@@ -69,19 +65,15 @@ module.exports = {
             deion: "Falha no cadastro."
           });
     
-        const newUserg = { name, email, url_image, id_google };
+        //const newUserg = { name, email, url_image, id_google };
           
         try {
-        const verifica = await User.findOne({
-                where: { id_google: id_google }
+        const goo = await User.findOrCreate({
+                where: { id_google: id_google },
+                defaults: { name , email, url_image, id_google }
         });
 
-        if(verifica == null){
-          const goo = await User.create(newUserg);
           return res.json(goo);
-            }else{
-                return res.json("User já existe");
-            }
         } catch (err) {
   
           return res.json({
