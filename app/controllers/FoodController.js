@@ -14,7 +14,7 @@ module.exports = {
         return res.send({ food });
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possível listar as comidas"
         });
@@ -33,7 +33,7 @@ module.exports = {
         return res.send(food);
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           deion: "Não foi possivel listar a comida"
         });
@@ -51,7 +51,7 @@ module.exports = {
         return res.send(food);
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           deion: "Não foi possivel listar a comida"
         });
@@ -70,7 +70,7 @@ module.exports = {
           return res.send(food);
         } catch (error) {
   
-          return res.send({
+          return res.status(400).send({
             error: "Erro",
             deion: "Não foi possivel listar a comida"
           });
@@ -79,11 +79,29 @@ module.exports = {
   
     //Cadastrar comidas
     async create(food, res) {
+
+    //   var multer = require('multer');
+    //   var storage = multer.diskStorage({
+    //     destination: function (req, file, cb){
+    //       cb(null, 'public/image');
+    //        },
+    //     filename: function (req, file, cb) {
+    //     var ext = file.orifinalname.substr(file.originalname.lastIndexOf('.') + 1);
+    //     cb(null, file, fieldname + "." + ext);
+    //     }
+    //   });
+
+    // router.post('/file', upload.single(filename), function(req, res, next){
+
+    // console.log(req.file);
+
+    // });
+
       const { name, id_type, url_image, control_measure} = food;
   
       if (!name || !id_type || !url_image || !control_measure)
         
-      return res.send({
+      return res.status(400).send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
@@ -99,11 +117,11 @@ module.exports = {
           const food = await foods.create(newFood);
         return  food.id;
         }else{
-            return res.json("Comida já existe");
+            return res.status(400).json("Comida já existe");
         }
       } catch (err) {
 
-        return res.json({
+        return res.status(400).json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
           err
@@ -117,7 +135,7 @@ module.exports = {
       const { name, id_type, url_image, control_measure } = req.body;
       
       if (!name || !id_type || !url_image || !control_measure)
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
         });
@@ -137,7 +155,7 @@ module.exports = {
         return res.send({ food });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
           err
@@ -156,7 +174,7 @@ module.exports = {
         return res.send({ food });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Deletar",
           deion: "Erro no Servidor",
           err

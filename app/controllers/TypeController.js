@@ -10,7 +10,7 @@ module.exports = {
 
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possível listar os tipos"
         });
@@ -27,7 +27,7 @@ module.exports = {
       return res.send({ type });
     } catch (error) {
 
-      return res.send({
+      return res.status(400).send({
         error: "Erro ",
         description: "Não foi possivel listar o tipo"
       });
@@ -42,7 +42,7 @@ module.exports = {
       return res.send({ type });
     } catch (error) {
 
-      return res.send({
+      return res.status(400).send({
         error: "Erro ",
         deion: "Não foi possivel listar o tipo"
       });
@@ -53,7 +53,7 @@ module.exports = {
         const { type } = req.body;
       
         if (!type)
-          return res.send({
+          return res.status(400).send({
             error: "Erro ao Cadastrar",
             deion: "Falha no cadastro."
           });
@@ -70,11 +70,11 @@ module.exports = {
             const ty = await types.create(newType);
           return res.json(ty);
         }else{
-            return res.json("Type já existe");
+            return res.status(400).json("Type já existe");
         }
         } catch (err) {
 
-          return res.json({
+          return res.status(400).json({
             error: "Erro ao Cadastrar",
             deion: "Erro no Servidor.",
             err
@@ -88,7 +88,7 @@ module.exports = {
         const { type } = req.body;
     
         if (!type)
-          return res.send({
+          return res.status(400).send({
             error: "Erro ao Atualizar",
             description: "Falha na atualização"
           });
@@ -105,7 +105,7 @@ module.exports = {
           return res.send({ newType });
         } catch (err) {
           
-          return res.send({
+          return res.status(400).send({
             error: "Erro ao Atualizar",
             description: "Erro no Servidor",
             err
@@ -123,7 +123,7 @@ module.exports = {
           return res.send({ type });
         } catch (err) {
 
-          return res.send({
+          return res.status(400).send({
             error: "Erro ao Deletar",
             deion: "Erro no Servidor",
             err

@@ -15,7 +15,7 @@ module.exports = {
         return res.send( diseases_symptom );
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possível listar as foods-micro"
         });
@@ -34,7 +34,7 @@ module.exports = {
       
       } catch (error) {
         
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possivel listar a food-micro"
         });
@@ -52,7 +52,7 @@ module.exports = {
           id_symptom: id
         })
         .then(() => console.log('ok'))
-        .catch(err => res.send(err));
+        .catch(err => res.status(400).send(err));
       });
 
       res.status(200).send({ "status": "ok" });
@@ -70,7 +70,7 @@ module.exports = {
         return res.send({ diseases_symptom });
       } catch (err) {
           
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",
           err

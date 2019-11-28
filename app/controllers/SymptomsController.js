@@ -11,7 +11,7 @@ module.exports = {
         return res.send({ symptom });
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possível listar os sintomas"
         });
@@ -29,7 +29,7 @@ module.exports = {
         return res.send({ symptom });
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possivel listar o sintoma"
         });
@@ -48,7 +48,7 @@ module.exports = {
         .then(([val, created]) => {
           ids.push(val.id);
         })
-        .catch(err => res.send(err));
+        .catch(err => res.status(400).send(err));
       }
 
       return ([id, ids]);
@@ -59,7 +59,7 @@ module.exports = {
       const { description } = req.body;
       
       if (!description)
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
         });
@@ -76,7 +76,7 @@ module.exports = {
         return res.send({ symptom });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
           err
@@ -94,7 +94,7 @@ module.exports = {
         return res.send({ symptom });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",
           err

@@ -14,7 +14,7 @@ module.exports = {
         return res.send({ microorganism });
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possível listar os microorganismos"
         });
@@ -33,7 +33,7 @@ module.exports = {
         return res.send(microorganism);
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possivel listar o microorganismo"
         });
@@ -45,7 +45,7 @@ module.exports = {
       const { name, description, id_disease } = req.body;
       
       if (!name || !description || !id_disease)
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
@@ -61,11 +61,11 @@ module.exports = {
         const microorganism = await microorganisms.create(newMicroorganism);
       return res.json(microorganism);
       }else{
-          return res.json("Microorganismo já existe");
+          return res.status(400).json("Microorganismo já existe");
       }
       } catch (err) {
 
-        return res.json({
+        return res.status(400).json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
           err
@@ -79,7 +79,7 @@ module.exports = {
       
       if (!name || !description || !id_disease)
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
         });
@@ -98,7 +98,7 @@ module.exports = {
         return res.send({ microorganism });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
           err
@@ -116,7 +116,7 @@ module.exports = {
         return res.send({ microorganism });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",
           err

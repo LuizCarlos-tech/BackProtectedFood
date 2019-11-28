@@ -10,7 +10,7 @@ module.exports = {
 
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possível listar as doenças"
         });
@@ -27,7 +27,7 @@ module.exports = {
         return res.send({ disease });
       } catch (error) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro",
           description: "Não foi possivel listar a doença"
         });
@@ -39,7 +39,7 @@ module.exports = {
       const { name } = disease;
       
       if (!name)
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Cadastrar",
           description: "Falha no cadastro."
         });
@@ -55,11 +55,11 @@ module.exports = {
           const disease = await diseases.create(newDisease);
           return disease.id;
         }else{
-            return res.json("Doença já existe");
+            return res.status(400).json({error: "Doença já existe"});
         }
       } catch (err) {
 
-        return res.json({
+        return res.status(400).json({
           error: "Erro ao Cadastrar",
           description: "Erro no Servidor.",
           erro: err.message
@@ -73,7 +73,7 @@ module.exports = {
       
       if (!name )
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Falha na atualização"
         });
@@ -90,7 +90,7 @@ module.exports = {
         return res.send({ disease });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Atualizar",
           description: "Erro no Servidor",
           err
@@ -108,7 +108,7 @@ module.exports = {
         return res.send({ disease });
       } catch (err) {
 
-        return res.send({
+        return res.status(400).send({
           error: "Erro ao Deletar",
           description: "Erro no Servidor",
           err
