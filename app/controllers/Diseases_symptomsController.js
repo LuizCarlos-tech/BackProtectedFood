@@ -3,21 +3,44 @@ const { diseases } = require("../models");
 const { symptoms } = require("../models");
 
 module.exports = {
-    //Listar todas as relaçoes Foods_Micro
+    //Listar todas as relaçoes Diseases-Symptoms
 
     async index(req, res) {
       try {
-
         const diseases_symptom = await diseases_symptoms.findAll(
           { include: [{model : diseases, as: "Disease"}, {model : symptoms, as: "Symptom"}]}
         );
-        
-        return res.send( diseases_symptom );
+
+          let ret = { diseases: [] };
+          
+          
+          diseases_symptom.map( fm => ret.diseases.push({id: fm.Disease.id, name: fm.Disease.name ,
+             symptoms: fm.Symptom}));
+          let ids = [];
+
+          let newarr = ret.diseases.map(nret => {  
+            let symps = ret.diseases.filter(val => nret.id === val.id );
+
+            nret.symptoms = symps.map(symp => symp.symptoms.description);
+
+            return nret;
+          }).map(nret => {
+
+            if(ids.indexOf(nret.id) === -1){
+              ids.push(nret.id);
+              return nret;
+            }
+
+            return null;
+          })
+          .filter(val => val);
+
+          return res.send(newarr);
       } catch (error) {
 
         return res.status(400).send({
           error: "Erro",
-          description: "Não foi possível listar as foods-micro"
+          description: "Não foi possível listar as doenças kct"
         });
       }
     },
@@ -29,8 +52,14 @@ module.exports = {
         { include: [{model : diseases, as: "Disease"}, {model : symptoms, as: "Symptom"}],
             where: { id_disease: req.params.id }
         });
+        const disease = await diseases.findOne(
+          { where: { id: req.params.id }
+          });
+          let ret = { disease, symptoms: [] };
+          diseases_symptom.map( fm => ret.symptoms.push( fm.Symptom.description));
+        
 
-        return res.send(diseases_symptom);
+        return res.send(ret);
       
       } catch (error) {
         
