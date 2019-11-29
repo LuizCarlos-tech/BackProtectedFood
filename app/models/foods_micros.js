@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Foods_micro.belongsTo(models.microorganisms,{
        foreignKey :'id_micro',
        as:'Microorganism'
-       });
+       }); 
   }
   return Foods_micro;
   }

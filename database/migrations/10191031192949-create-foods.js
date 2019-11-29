@@ -1,7 +1,6 @@
-
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('microorganisms', {
+    return queryInterface.createTable('foods', {
           id: {
           allowNull: false,
           autoIncrement: true,
@@ -11,18 +10,23 @@ module.exports = {
           name: {
             allowNull: true,
             type: DataTypes.STRING,
+            unique: true,
           },
-          description: {
+          url_image: {
             allowNull: true,
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
           },
-          id_disease: {
+          control_measure: {
+            allowNull: true,
+            type: DataTypes.STRING,
+          },
+          id_type: {
             allowNull: true,
             type: DataTypes.INTEGER,
-            references: {
-              model: 'diseases',
-               key: 'id'
-            }
+		      references: {
+          	 model: 'types',
+         	   key: 'id'
+          }
           },
           createdAt: {
             allowNull: false,
@@ -36,6 +40,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('microorganisms');
+    return queryInterface.dropTable('foods');
   }
 };

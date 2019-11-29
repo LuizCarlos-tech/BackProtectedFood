@@ -40,7 +40,7 @@ module.exports = {
     async create(id, symptoms_list, res) {
       let ids = [];
 
-      for(symptom of symptoms_list){
+      for(symptom of symptoms_list){ 
         let symp = await symptoms.findOrCreate({
           where: { description: symptom }
           ,defaults: { description: symptom }

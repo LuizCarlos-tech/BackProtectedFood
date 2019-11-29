@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     Foods.belongsToMany(models.microorganisms,{
       through: 'Foods_micro',
       as: 'food_micros',
-      foreignKey: 'id_foods',
+      foreignKey: 'id_foods', 
     });
 
     Foods.belongsTo(models.types,{

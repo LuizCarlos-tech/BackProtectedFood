@@ -37,10 +37,11 @@ module.exports = {
 
           return res.send(newarr);
       } catch (error) {
-
+        console.log(error);
+        
         return res.status(400).send({
           error: "Erro",
-          description: "Não foi possível listar as doenças kct"
+          description: "Não foi possível listar as doenças"
         });
       }
     },
@@ -72,7 +73,6 @@ module.exports = {
   
     //Cadastrar food-micro
     async create(idDisease, ids, res) {
-      console.log(idDisease, ids);
       
       
       ids.map(async id => {
@@ -87,6 +87,14 @@ module.exports = {
       res.status(200).send({ "status": "ok" });
 
     },
+
+    async update(req, symptoms, res) {
+
+
+
+    },
+
+    
   
     
     async delete(req, res) {

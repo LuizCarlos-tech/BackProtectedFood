@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       id_facebook: DataTypes.STRING,
       id_google: DataTypes.STRING,
       url_image: DataTypes.STRING
-    });
+    }); 
     
     User.addHook('beforeSave', async user => {
       if(user.password) {

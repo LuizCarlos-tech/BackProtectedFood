@@ -13,8 +13,31 @@ module.exports = {
         const food_micro = await foods_micros.findAll(
           { include: [{model : foods, as: "Food"}, {model : microorganisms, as: "Microorganism"}]}
         );
-        
-        return res.send( food_micro );
+        let ret = { foodies: [] };
+          
+          
+        food_micro.map( fm => ret.foodies.push({id: fm.Food.id, name: fm.Food.name ,
+           microorganism: fm.Microorganism}));
+        let ids = [];
+
+        let newarr = ret.foodies.map(nret => {  
+          let micros = ret.foodies.filter(val => nret.id === val.id );
+
+          nret.microorganism = micros.map(micro => micro.microorganism.name);
+
+          return nret;
+        }).map(nret => {
+
+          if(ids.indexOf(nret.id) === -1){
+            ids.push(nret.id);
+            return nret;
+          }
+
+          return null;
+        })
+        .filter(val => val);
+
+        return res.send(newarr);
       } catch (error) {
 
         return res.status(400).send({

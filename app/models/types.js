@@ -9,5 +9,5 @@ module.exports = (sequelize, DataTypes) => {
           as : 'foods'
       });
     }
-return Type;
+return Type; 
 }

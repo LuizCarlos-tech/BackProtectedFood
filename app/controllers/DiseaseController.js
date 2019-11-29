@@ -1,4 +1,5 @@
 const { diseases } = require("../models");
+const { diseases_symptoms } = require("../models");
 
 module.exports = {
     //Listar todas as doenças
@@ -67,9 +68,13 @@ module.exports = {
       }
     },
   
-    async update(req, res) {
+    async update(id, disease, res) {
       //Atualização de Doença
-      const { name } = req.body;
+      const disease_symptom = await diseases_symptoms.destroy({
+        where: {id_disease: id } 
+      });
+
+      const { name } = disease;
       
       if (!name )
 
@@ -84,10 +89,10 @@ module.exports = {
             name,
             updatedAt: Date.now
           },
-          { where: { id: req.params.id } }
+          { where: { id } }
         );
 
-        return res.send({ disease });
+        return id;
       } catch (err) {
 
         return res.status(400).send({
@@ -101,6 +106,9 @@ module.exports = {
     async delete(req, res) {
       //Deletar doença
       try {
+        const disease_symptom = await diseases_symptoms.destroy({
+          where: {id_disease: req.params.id } 
+        });
         const disease = await diseases.destroy({
           where: { id: req.params.id }
         });

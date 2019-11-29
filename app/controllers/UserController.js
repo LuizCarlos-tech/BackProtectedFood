@@ -23,7 +23,7 @@ module.exports = {
             where: { id_facebook: id_facebook },
             defaults: { name , email, id_facebook }
         });
-
+ 
         return res.json(fb);
 
         } catch (err) {
@@ -31,7 +31,7 @@ module.exports = {
           
           return res.json({
             error: "Erro ao Cadastrar",
-            deion: "Erro no Servidor.",
+            description: "Erro no Servidor.",
             err
           });
         }

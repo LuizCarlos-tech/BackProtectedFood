@@ -1,5 +1,6 @@
 const { foods } = require("../models");
 const { types } = require("../models");
+const { foods_micros } = require("../models");
 
 module.exports = {
    
@@ -61,14 +62,17 @@ module.exports = {
        //Listar apenas uma comida pelo type
        async showType(req, res) {
         try {
+          const type = await types.findOne({
+            where: {type: req.params.name}
+          });
           const food = await foods.findAll(
             { include: [{model : types, as:"types"}],
-            where: { id_type: req.params.id_type }
+            where: { id_type: type.id }
           }
           );
   
           return res.send(food);
-        } catch (error) {
+        } catch (error) {          
   
           return res.status(400).send({
             error: "Erro",
@@ -79,23 +83,6 @@ module.exports = {
   
     //Cadastrar comidas
     async create(food, res) {
-
-    //   var multer = require('multer');
-    //   var storage = multer.diskStorage({
-    //     destination: function (req, file, cb){
-    //       cb(null, 'public/image');
-    //        },
-    //     filename: function (req, file, cb) {
-    //     var ext = file.orifinalname.substr(file.originalname.lastIndexOf('.') + 1);
-    //     cb(null, file, fieldname + "." + ext);
-    //     }
-    //   });
-
-    // router.post('/file', upload.single(filename), function(req, res, next){
-
-    // console.log(req.file);
-
-    // });
 
       const { name, id_type, url_image, control_measure} = food;
   
@@ -131,9 +118,11 @@ module.exports = {
 
 
     //Atualização de comidas
-    async update(req, res) {  
-      const { name, id_type, url_image, control_measure } = req.body;
-      
+    async update(id, food, res) {  
+      const { name, id_type, url_image, control_measure } = food;
+      const food_micro = await foods_micros.destroy({
+        where: { id_foods: id }
+      });
       if (!name || !id_type || !url_image || !control_measure)
         return res.status(400).send({
           error: "Erro ao Atualizar",
@@ -149,10 +138,10 @@ module.exports = {
             control_measure,
             updatedAt: Date.now
           },
-          { where: { id: req.params.id } }
+          { where: { id } }
         );
 
-        return res.send({ food });
+        return id;
       } catch (err) {
 
         return res.status(400).send({
@@ -167,6 +156,9 @@ module.exports = {
     //Deletar comidas
     async delete(req, res) {
       try {
+        const food_micro = await foods_micros.destroy({
+          where: { id_foods: req.params.id }
+        });
         const food = await foods.destroy({
           where: { id: req.params.id }
         });

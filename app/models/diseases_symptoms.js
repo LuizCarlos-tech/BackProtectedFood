@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     id_disease: DataTypes.INTEGER,
     id_symptom: DataTypes.INTEGER,
   });
-  Diseases_symptoms.associate = models => {
+  Diseases_symptoms.associate = models => { 
   
     Diseases_symptoms.belongsTo(models.diseases,{
     foreignKey :'id_disease',

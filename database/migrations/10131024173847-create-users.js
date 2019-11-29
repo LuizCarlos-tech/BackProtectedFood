@@ -26,6 +26,7 @@ module.exports = {
           email: {
             allowNull: true,
             type: DataTypes.STRING,
+            unique: true,
           },
           id_google: {
             allowNull: true,

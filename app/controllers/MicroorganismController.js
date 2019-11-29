@@ -12,7 +12,7 @@ module.exports = {
         );
 
         return res.send({ microorganism });
-      } catch (error) {
+      } catch (error) { 
 
         return res.status(400).send({
           error: "Erro",
